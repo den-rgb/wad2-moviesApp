@@ -24,6 +24,7 @@ const useStyles = makeStyles({
     backgroundColor: "rgb(255, 0, 0)",
   },
 });
+
 export default function MovieCard({ movie, action }) {
   const classes = useStyles();
   const { favorites, addToFavorites } = useContext(MoviesContext);
