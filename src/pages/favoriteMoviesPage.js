@@ -4,8 +4,8 @@ import { MoviesContext } from "../contexts/moviesContext";
 import { useQueries } from "react-query";
 import { getMovie } from "../api/tmdb-api";
 import Spinner from '../components/spinner'
-import RemoveFromFavorites from "../components/cardIcons/removefromFavorites";
 import WriteReview from "../components/cardIcons/writeReview";
+import RemoveFromFavorites from "../components/cardIcons/removeFromFavorites";
 
 const FavoriteMoviesPage = () => {
   const {favorites: movieIds } = useContext(MoviesContext);
