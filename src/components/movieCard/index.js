@@ -8,6 +8,7 @@ import CardHeader from "@material-ui/core/CardHeader";
 import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
 import FavoriteIcon from "@material-ui/icons/Favorite";
+import DeleteIcon from "@material-ui/icons/Delete";
 import WatchListIcon from "@material-ui/icons/PlaylistAdd"
 import CalendarIcon from "@material-ui/icons/CalendarTodayTwoTone";
 import StarRateIcon from "@material-ui/icons/StarRate";
@@ -19,6 +20,10 @@ import Avatar from "@material-ui/core/Avatar";
 
 import { MoviesContext } from "../../contexts/moviesContext";
 import AddToWatchListIcon from "../cardIcons/addToWatchList";
+import { ToggleButton } from "@material-ui/lab";
+
+import AddToFavoritesIcon from "../cardIcons/addToFavorites";
+import RemoveFromFavoritesIcon from "../cardIcons/removeFromFavorites"
 
 const useStyles = makeStyles({
   card: { 
@@ -38,6 +43,11 @@ export default function MovieCard({ movie, action }) {
   const classes = useStyles();
   const { favorites, addToFavorites } = useContext(MoviesContext);
   const { watchList, addToWatchList} = useContext(MoviesContext);
+ 
+ 
+  const [selected,setSelected] = React.useState(false);
+
+
 
   if (favorites.find((id) => id === movie.id)) {
     movie.favorite = true;
@@ -53,16 +63,7 @@ export default function MovieCard({ movie, action }) {
     movie.watchList = false ;
   }
 
-
-  const handleAddToWatchList = (e) => {
-    e.preventDefault();
-    addToWatchList(movie);
-  };
-
-  const handleAddToFavorite = (e) => {
-    e.preventDefault();
-    addToFavorites(movie);
-  };
+ 
   return (
     <Card className={classes.card}>
       <Grid container>
@@ -123,12 +124,19 @@ export default function MovieCard({ movie, action }) {
       </CardContent>
       <CardActions disableSpacing>
         {action(movie)}
-      <IconButton id="addFav" aria-label="add to favorites" onClick={handleAddToFavorite}>
-        <FavoriteIcon color="primary" fontSize="large" />
-    </IconButton>
-    <IconButton aria-label="add to favorites" onClick={handleAddToWatchList}>
-        <WatchListIcon color="primary" fontSize="large" />
-    </IconButton>
+        
+      <ToggleButton value="check" selected={!selected} aria-label="add to favorites" onClick={()=>{
+        setSelected(selected);
+      }}>
+        <AddToFavoritesIcon movie={movie}/>
+    </ToggleButton>
+    <ToggleButton value="check" selected={selected} aria-label="remove from favorites" onClick={()=>{
+        setSelected(!selected);
+      }}><RemoveFromFavoritesIcon movie={movie}/>
+         
+    </ToggleButton>
+    <AddToWatchListIcon movie={movie}/>
+    </CardActions><CardActions>
         <Link to={`/movies/${movie.id}`}>
         <Button variant="outlined" size="medium" color="primary">
           More Info ...
