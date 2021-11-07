@@ -8,6 +8,7 @@ import CardHeader from "@material-ui/core/CardHeader";
 import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
 import FavoriteIcon from "@material-ui/icons/Favorite";
+import WatchListIcon from "@material-ui/icons/PlaylistAdd"
 import CalendarIcon from "@material-ui/icons/CalendarTodayTwoTone";
 import StarRateIcon from "@material-ui/icons/StarRate";
 import IconButton from "@material-ui/core/IconButton";
@@ -15,25 +16,48 @@ import Grid from "@material-ui/core/Grid";
 import img from '../../images/film-poster-placeholder.png'
 import { Link } from "react-router-dom";
 import Avatar from "@material-ui/core/Avatar";
+
 import { MoviesContext } from "../../contexts/moviesContext";
+import AddToWatchListIcon from "../cardIcons/addToWatchList";
 
 const useStyles = makeStyles({
-  card: { maxWidth: 345 },
+  card: { 
+    maxWidth: 345 ,
+  },
   media: { height: 500 },
   avatar: {
     backgroundColor: "rgb(255, 0, 0)",
+    right:0,
   },
+  avatar2: {
+    backgroundColor: "rgb(0, 255, 50)",
+  }
 });
 
 export default function MovieCard({ movie, action }) {
   const classes = useStyles();
   const { favorites, addToFavorites } = useContext(MoviesContext);
+  const { watchList, addToWatchList} = useContext(MoviesContext);
 
   if (favorites.find((id) => id === movie.id)) {
     movie.favorite = true;
+    
   } else {
     movie.favorite = false
+    
   }
+
+  if(watchList.find((id) => id === movie.id)){
+    movie.watchList = true;
+  }else{
+    movie.watchList = false ;
+  }
+
+
+  const handleAddToWatchList = (e) => {
+    e.preventDefault();
+    addToWatchList(movie);
+  };
 
   const handleAddToFavorite = (e) => {
     e.preventDefault();
@@ -41,21 +65,38 @@ export default function MovieCard({ movie, action }) {
   };
   return (
     <Card className={classes.card}>
-        <CardHeader
+      <Grid container>
+          <Grid item xs={3}>
+            <CardHeader  avatar={
+      movie.favorite ? (
+        <Avatar className={classes.avatar}>
+          <FavoriteIcon />
+        </Avatar>
+      ) : null
+      }/>
+          </Grid>
+          <Grid item xs={3}>
+            <CardHeader
       className={classes.header}
       avatar={
-        movie.favorite ? (
-          <Avatar className={classes.avatar}>
-            <FavoriteIcon />
-          </Avatar>
-        ) : null
-      }
+       movie.watchList ? (
+         <Avatar className={classes.avatar2}>
+           <WatchListIcon />
+         </Avatar>
+       ) : null
+       } />
+          </Grid>
+        </Grid>
+      
+        <CardHeader
+      className={classes.header}
       title={
         <Typography variant="h5" component="p">
           {movie.title}{" "}
         </Typography>
       }
     />
+    
       <CardMedia
         className={classes.media}
         image={
@@ -82,8 +123,11 @@ export default function MovieCard({ movie, action }) {
       </CardContent>
       <CardActions disableSpacing>
         {action(movie)}
-      <IconButton aria-label="add to favorites" onClick={handleAddToFavorite}>
+      <IconButton id="addFav" aria-label="add to favorites" onClick={handleAddToFavorite}>
         <FavoriteIcon color="primary" fontSize="large" />
+    </IconButton>
+    <IconButton aria-label="add to favorites" onClick={handleAddToWatchList}>
+        <WatchListIcon color="primary" fontSize="large" />
     </IconButton>
         <Link to={`/movies/${movie.id}`}>
         <Button variant="outlined" size="medium" color="primary">
