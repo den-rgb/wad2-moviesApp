@@ -5,7 +5,8 @@ import { useQueries } from "react-query";
 import { getMovie } from "../api/tmdb-api";
 import Spinner from '../components/spinner'
 import WriteReview from "../components/cardIcons/writeReview";
-import RemoveFromFavorites from "../components/cardIcons/removeFromFavorites";
+import CardActions from "@material-ui/core/CardActions";
+
 
 const FavoriteMoviesPage = () => {
   const {favorites: movieIds } = useContext(MoviesContext);
@@ -29,18 +30,21 @@ const FavoriteMoviesPage = () => {
   const toDo = () => true;
 
   return (
+    
     <PageTemplate
       title="Favorite Movies"
       movies={movies}
       action={(movie) => {
-        return (
-          <>
-            <RemoveFromFavorites movie={movie} />
-            <WriteReview movie={movie} />
-          </>
-        );
-      }}
+        return <>
+       
+        <WriteReview movie={movie}/>
+       
+        </>
+        }}
     />
+    
+    
+    
   );
 };
 

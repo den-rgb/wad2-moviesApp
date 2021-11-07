@@ -29,11 +29,10 @@ const UpcomingMoviesPage = (props) => {
     <PageTemplate
       title='Upcoming Movies'
       movies={movies}
-      action={(movie) => {
+      action={() => {
         return (
           <>
-            <RemoveFromFavorites movie={movie} />
-            <AddToWatchListIcon movie={movie}/>
+            
           </>
         );
       }}

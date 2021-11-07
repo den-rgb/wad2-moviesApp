@@ -125,12 +125,12 @@ export default function MovieCard({ movie, action }) {
       <CardActions disableSpacing>
         {action(movie)}
         
-      <ToggleButton value="check" selected={!selected} aria-label="add to favorites" onClick={()=>{
+      <ToggleButton size="small" value="check" selected={!selected} aria-label="add to favorites" onChange={()=>{
         setSelected(selected);
       }}>
         <AddToFavoritesIcon movie={movie}/>
     </ToggleButton>
-    <ToggleButton value="check" selected={selected} aria-label="remove from favorites" onClick={()=>{
+    <ToggleButton size="small" value="check" selected={selected} aria-label="remove from favorites" onChange={()=>{
         setSelected(!selected);
       }}><RemoveFromFavoritesIcon movie={movie}/>
          
