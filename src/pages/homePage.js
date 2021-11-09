@@ -8,6 +8,7 @@ import AddToWatchListIcon from '../components/cardIcons/addToWatchList'
 
 const HomePage = (props) => {
   const {  data, error, isLoading, isError }  = useQuery('discover', getMovies)
+ 
 
   if (isLoading) {
     return <Spinner />
@@ -17,11 +18,14 @@ const HomePage = (props) => {
     return <h1>{error.message}</h1>
   }  
   const movies = data.results;
+  console.log(data);
 
   // Redundant, but necessary to avoid app crashing.
   const favorites = movies.filter(m => m.favorite)
   localStorage.setItem('favorites', JSON.stringify(favorites))
-  //const addToFavorites=(movieId)=>true
+
+  const watchList = movies.filter(m => m.watchList)
+  localStorage.setItem('watchList', JSON.stringify(watchList))
 
   return (
     <PageTemplate

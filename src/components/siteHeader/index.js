@@ -12,13 +12,22 @@ import Menu from "@material-ui/core/Menu";
 import { withRouter } from "react-router-dom";
 import { useTheme } from "@material-ui/core/styles";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
+import { Avatar } from "@material-ui/core";
+import LoginIcon from "@material-ui/icons/Person"
 
 const useStyles = makeStyles((theme) => ({
   title: {
     flexGrow: 1,
   },
   offset: theme.mixins.toolbar,
+  notVisible:{
+    visibility:"hidden",
+  },
+  isVisible:{
+    visibility:"visible",
+  }
 }));
+
 
 const SiteHeader = ( { history }) => {
   const classes = useStyles();
@@ -26,13 +35,34 @@ const SiteHeader = ( { history }) => {
   const open = Boolean(anchorEl);
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("md"));
+  
+  const activeuser = localStorage.getItem("userName");
+  
+  
 
   const menuOptions = [
     { label: "Home", path: "/" },
     { label: "Favorites", path: "/movies/favorites" },
     { label: "Upcoming", path: "/movies/upcoming" },
     { label: "Your WatchList", path: "/movies/watchList" },
+    {label: "Trending" , path:"/movies/trending"},
   ];
+
+  
+   
+
+  const handleLogOut=()=>{
+    
+    localStorage.clear();
+    handleMenuSelect('/');
+  }
+
+  const checkTrue=()=>{
+     if(activeuser==null){
+      handleMenuSelect('/login');
+      
+     }
+  };
 
   const handleMenuSelect = (pageURL) => {
     history.push(pageURL);
@@ -42,16 +72,18 @@ const SiteHeader = ( { history }) => {
     setAnchorEl(event.currentTarget);
   };
 
+
   return (
     <>
       <AppBar position="fixed" color="secondary">
         <Toolbar>
-          <Typography variant="h4" className={classes.title}>
-            TMDB Client
-          </Typography>
-          <Typography variant="h6" className={classes.title}>
-            Try Watching One of these!
-          </Typography>
+                    <IconButton
+                      
+                      onClick={() => checkTrue()}
+                    >
+                      <LoginIcon color="primary" fontSize="large"/>
+                      Welcome {activeuser}
+                    </IconButton>
             {isMobile ? (
               <>
                 <IconButton
@@ -101,6 +133,13 @@ const SiteHeader = ( { history }) => {
                 ))}
               </>
             )}
+                    <Button
+                      className={activeuser!=null?classes.isVisible : classes.notVisible}
+                      onClick={()=>handleLogOut()}
+                    >
+                      LogOut
+                    </Button>
+                  
         </Toolbar>
       </AppBar>
       <div className={classes.offset} />
