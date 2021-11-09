@@ -36,25 +36,25 @@ const useStyles = makeStyles((theme) => ({
   },
   submit: {
     marginRight: theme.spacing(2),
+    marginTop: theme.spacing(2),
   },
+  
   root2: {
     marginRight: theme.spacing(2),
-    display: "flex",
-    flexDirection: "row",
-    alignItems: "center",
-    marginLeft:525,
+    flexDirection: "column",
+    width:"40ch",
     marginTop:theme.spacing(20),
   },
   
 }));
 
-const RegisterForm = ({history }) => {
+const Registry = ({history }) => {
   const classes = useStyles();
   const { register, handleSubmit, errors, reset } = useForm();
-  const [username,setUsername]=useState("");
-  const [password,setPassword]=useState("");
   const [email,setEmail]=useState("");
-  const [user, setUser]= useState();
+  const [password,setPassword]=useState("");
+  const [userName,setUserName]=useState("");
+ 
   
  
   const handleMenuSelect = (pageURL) => {
@@ -62,7 +62,8 @@ const RegisterForm = ({history }) => {
   };
 
   const handleSubmit2=()=>{
-  handleMenuSelect("/");
+       handleMenuSelect("/login")
+      
   };
 
 
@@ -81,16 +82,16 @@ const RegisterForm = ({history }) => {
       >
           <TextField
           
-          className={classes.passwordField}
+          className={classes.root2}
           variant="outlined"
           margin="normal"
           required
           id="name"
           label="UserName"
-          name="name"
-          value={username}
+          name="username"
+          value={userName}
           autoFocus
-          onChange={({ target }) => setUsername(target.value),(localStorage.setItem("user",JSON.stringify(username)))}
+          onChange={({target})=>setUserName(target.value)}
           inputRef={register({ 
               required: true,
              })}
@@ -98,7 +99,7 @@ const RegisterForm = ({history }) => {
 
 <TextField
           
-          
+          className={classes.root2}
           variant="outlined"
           margin="normal"
           required
@@ -106,8 +107,8 @@ const RegisterForm = ({history }) => {
           label="E-mail"
           name="email"
           value={email}
-          autoFocus
-          onChange={({ target }) => setEmail(target.value),(localStorage.setItem("email",JSON.stringify(email)))}
+          
+          onChange={ ({ target }) =>setEmail(target.value)}
           inputRef={register({ 
               required: true,
              })}
@@ -115,7 +116,7 @@ const RegisterForm = ({history }) => {
         
         
          <TextField
-         
+          className={classes.root2}
           variant="outlined"
           margin="normal"
           required
@@ -123,7 +124,7 @@ const RegisterForm = ({history }) => {
           id="password"
           label="Password"
           name="password"
-          onChange={({ target }) => setPassword(target.value),(localStorage.setItem("password",JSON.stringify(password)))}
+          onChange={({target})=>setPassword(target.value)}
           inputRef={register({  
             required: true,
             minLength: { value: 5, message:"Password must be longer!!"},
@@ -140,34 +141,47 @@ const RegisterForm = ({history }) => {
 
         <Box className={classes.root2}>
           <Button
-            type="Login"
+            type="Register"
             variant="contained"
             color="primary"
             className={classes.submit}
+            onClick={()=>{
+              localStorage.setItem("userName",JSON.stringify(userName));
+              localStorage.setItem("email",JSON.stringify(email));
+              localStorage.setItem("password",JSON.stringify(password));
+            }}
           >
-            Login
+            Register
           </Button>
-          
-          
-        
-        
           <Button
-            type="Login"
+            type="reset"
             variant="contained"
-            color="primary"
+            color="secondary"
             className={classes.submit}
             onClick={() => {
-                handleMenuSelect("/login");
-              }}
+              reset({
+                email: "",
+                password: "",
+              });
+            }}
           >
-            Already Have An Account?
+            Reset
           </Button>
-          
-          </Box>
-        
+         
+          <Button
+            type="login"
+            variant="contained"
+            color="active"
+            className={classes.submit}
+            
+          >
+            Back to Login
+          </Button>
+
+        </Box>
       </form>
     </Box>
   );
 };
 
-export default withRouter(RegisterForm);
+export default withRouter(Registry);

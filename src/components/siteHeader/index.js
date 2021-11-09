@@ -52,16 +52,26 @@ const SiteHeader = ( { history }) => {
    
 
   const handleLogOut=()=>{
+    localStorage.setItem("userName",null);
     
-    localStorage.clear();
     handleMenuSelect('/');
   }
 
+  if(activeuser==="undefined"||activeuser==="null"){
+    localStorage.setItem("userName","");
+  }
+
   const checkTrue=()=>{
-     if(activeuser==null){
+     if(activeuser===""||activeuser===null){
       handleMenuSelect('/login');
       
+     }else if(activeuser==="undefined"||activeuser==="null"){
+      handleMenuSelect('/login');
+      
+     }else{
+       console.log(activeuser);
      }
+
   };
 
   const handleMenuSelect = (pageURL) => {

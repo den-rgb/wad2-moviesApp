@@ -63,8 +63,15 @@ const LoginForm = ({history }) => {
 
   const handleSubmit2=()=>{
     if(email===localStorage.getItem("email")&&password===localStorage.getItem("password")){
-       handleMenuSelect("/");}
-
+       handleMenuSelect("/");
+       const returningUser=localStorage.getItem("userName");
+       localStorage.setItem("userName",returningUser);
+       console.log("items : "+localStorage.getItem("email")+" "+localStorage.getItem("password"));
+      }
+       else{
+        handleMenuSelect("/login");
+        console.log("items : "+localStorage.getItem("email")+" "+localStorage.getItem("password"));
+       }
   };
 
  
@@ -78,7 +85,7 @@ const LoginForm = ({history }) => {
       </Typography>
       <form
         className={classes.form}
-        onSubmit={handleSubmit2}
+        
         noValidate
       >
           <TextField
@@ -129,6 +136,9 @@ const LoginForm = ({history }) => {
             variant="contained"
             color="primary"
             className={classes.submit}
+            onClick={()=>{
+              handleSubmit2();
+            }}
           >
             Login
           </Button>
