@@ -10,9 +10,10 @@
     "prop-types": "^15.7.2",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
+    "react-firebase-hooks": "^4.0.1",
     "react-hook-form": "^3.29.4",
     "react-query": "^3.13.0",
-    "react-router-dom": "^5.2.0",
+    "react-router-dom": "^5.3.0",
     "react-scripts": "4.0.1"
   },
   "scripts": {
@@ -47,6 +48,7 @@
     "@storybook/addon-links": "^6.2.9",
     "@storybook/node-logger": "^6.2.9",
     "@storybook/preset-create-react-app": "^3.1.7",
-    "@storybook/react": "^6.2.9"
+    "@storybook/react": "^6.2.9",
+    "@types/firebase": "^3.2.1"
   }
 }

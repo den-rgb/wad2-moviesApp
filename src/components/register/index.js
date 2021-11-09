@@ -37,23 +37,23 @@ const useStyles = makeStyles((theme) => ({
   submit: {
     marginRight: theme.spacing(2),
   },
-  
   root2: {
     marginRight: theme.spacing(2),
     display: "flex",
-    flexDirection: "column",
+    flexDirection: "row",
     alignItems: "center",
-    
+    marginLeft:525,
     marginTop:theme.spacing(20),
   },
   
 }));
 
-const LoginForm = ({history }) => {
+const RegisterForm = ({history }) => {
   const classes = useStyles();
   const { register, handleSubmit, errors, reset } = useForm();
-  const [email,setEmail]=useState("");
+  const [username,setUsername]=useState("");
   const [password,setPassword]=useState("");
+  const [email,setEmail]=useState("");
   const [user, setUser]= useState();
   
  
@@ -62,19 +62,17 @@ const LoginForm = ({history }) => {
   };
 
   const handleSubmit2=()=>{
-    if(email===localStorage.getItem("email")&&password===localStorage.getItem("password")){
-       handleMenuSelect("/");}
-
+  handleMenuSelect("/");
   };
 
- 
+
  
   
 
   return (
     <Box component="div" className={classes.root}>
       <Typography component="h2" variant="h3">
-        Login
+        Register
       </Typography>
       <form
         className={classes.form}
@@ -83,7 +81,24 @@ const LoginForm = ({history }) => {
       >
           <TextField
           
-          className={classes.userField}
+          className={classes.passwordField}
+          variant="outlined"
+          margin="normal"
+          required
+          id="name"
+          label="UserName"
+          name="name"
+          value={username}
+          autoFocus
+          onChange={({ target }) => setUsername(target.value),(localStorage.setItem("user",JSON.stringify(username)))}
+          inputRef={register({ 
+              required: true,
+             })}
+        />
+
+<TextField
+          
+          
           variant="outlined"
           margin="normal"
           required
@@ -92,7 +107,7 @@ const LoginForm = ({history }) => {
           name="email"
           value={email}
           autoFocus
-          onChange={({ target }) => setEmail(target.value)}
+          onChange={({ target }) => setEmail(target.value),(localStorage.setItem("email",JSON.stringify(email)))}
           inputRef={register({ 
               required: true,
              })}
@@ -100,7 +115,7 @@ const LoginForm = ({history }) => {
         
         
          <TextField
-          className={classes.passwordField}
+         
           variant="outlined"
           margin="normal"
           required
@@ -108,7 +123,7 @@ const LoginForm = ({history }) => {
           id="password"
           label="Password"
           name="password"
-          onChange={({ target }) => setPassword(target.value)}
+          onChange={({ target }) => setPassword(target.value),(localStorage.setItem("password",JSON.stringify(password)))}
           inputRef={register({  
             required: true,
             minLength: { value: 5, message:"Password must be longer!!"},
@@ -132,37 +147,27 @@ const LoginForm = ({history }) => {
           >
             Login
           </Button>
+          
+          
+        
+        
           <Button
-            type="reset"
+            type="Login"
             variant="contained"
-            color="secondary"
+            color="primary"
             className={classes.submit}
             onClick={() => {
-              reset({
-                email: "",
-                password: "",
-              });
-            }}
+                handleMenuSelect("/login");
+              }}
           >
-            Reset
+            Already Have An Account?
           </Button>
-         
-          <Button
-            type="reset"
-            variant="contained"
-            color="active"
-            className={classes.submit}
-            onClick={() => {
-              handleMenuSelect("/register");
-            }}
-          >
-            Register
-          </Button>
-
-        </Box>
+          
+          </Box>
+        
       </form>
     </Box>
   );
 };
 
-export default withRouter(LoginForm);
+export default withRouter(RegisterForm);
