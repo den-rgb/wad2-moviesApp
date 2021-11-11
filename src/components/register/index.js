@@ -54,6 +54,7 @@ const Registry = ({history }) => {
   const [email,setEmail]=useState("");
   const [password,setPassword]=useState("");
   const [userName,setUserName]=useState("");
+  const [userName2]=useState("");
  
   
  
@@ -147,6 +148,7 @@ const Registry = ({history }) => {
             className={classes.submit}
             onClick={()=>{
               localStorage.setItem("userName",JSON.stringify(userName));
+              localStorage.setItem("userName2","");
               localStorage.setItem("email",JSON.stringify(email));
               localStorage.setItem("password",JSON.stringify(password));
             }}

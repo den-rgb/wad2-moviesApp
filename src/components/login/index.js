@@ -61,23 +61,6 @@ const LoginForm = ({history }) => {
     history.push(pageURL);
   };
 
-  const handleSubmit2=()=>{
-    if(email===localStorage.getItem("email")&&password===localStorage.getItem("password")){
-       handleMenuSelect("/");
-       const returningUser=localStorage.getItem("userName");
-       localStorage.setItem("userName",returningUser);
-       console.log("items : "+localStorage.getItem("email")+" "+localStorage.getItem("password"));
-      }
-       else{
-        handleMenuSelect("/login");
-        console.log("items : "+localStorage.getItem("email")+" "+localStorage.getItem("password"));
-       }
-  };
-
- 
- 
-  
-
   return (
     <Box component="div" className={classes.root}>
       <Typography component="h2" variant="h3">
@@ -85,7 +68,7 @@ const LoginForm = ({history }) => {
       </Typography>
       <form
         className={classes.form}
-        
+       
         noValidate
       >
           <TextField
@@ -137,7 +120,7 @@ const LoginForm = ({history }) => {
             color="primary"
             className={classes.submit}
             onClick={()=>{
-              handleSubmit2();
+             handleMenuSelect("/");
             }}
           >
             Login
@@ -158,7 +141,7 @@ const LoginForm = ({history }) => {
           </Button>
          
           <Button
-            type="reset"
+            type="register"
             variant="contained"
             color="active"
             className={classes.submit}

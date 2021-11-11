@@ -37,6 +37,7 @@ const SiteHeader = ( { history }) => {
   const isMobile = useMediaQuery(theme.breakpoints.down("md"));
   
   const activeuser = localStorage.getItem("userName");
+  const activeuser2=localStorage.getItem("userName2");
   
   
 
@@ -52,12 +53,12 @@ const SiteHeader = ( { history }) => {
    
 
   const handleLogOut=()=>{
-    localStorage.setItem("userName",null);
+    localStorage.setItem("userName","");
     
     handleMenuSelect('/');
   }
 
-  if(activeuser==="undefined"||activeuser==="null"){
+  if(activeuser==="undefined"||activeuser==="null"||activeuser===null){
     localStorage.setItem("userName","");
   }
 
@@ -144,7 +145,7 @@ const SiteHeader = ( { history }) => {
               </>
             )}
                     <Button
-                      className={activeuser!=null?classes.isVisible : classes.notVisible}
+                      className={activeuser!=""?classes.isVisible : classes.notVisible}
                       onClick={()=>handleLogOut()}
                     >
                       LogOut
