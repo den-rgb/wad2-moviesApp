@@ -35,55 +35,65 @@ const TrendingMoviesPage = () => {
 
   const movie=movies.map((movie)=>{
     return(
-         <li>{movie.title}</li>
+         <ul>{movie.title}</ul>
     )
     })
 
   const score=movies.map((score)=>{
     return(
-         <li>{score.vote_average}</li>
+         <ul>{score.vote_average}</ul>
     )
     })
 
    const description=movies.map((description)=>{
     return(
-         <li>{description.overview}</li>
+         <ul>{description.overview}</ul>
     )
     })
 
-    function createData(name,score,desc) {
-      return { name,score,desc };
+    function createData(num,name,score,desc) {
+      return { num,name,score,desc };
     }
     
     const rows = [
-      createData(movie,score,description)
+      createData(1,movie[0],score[0],description[0]),
+      createData(2,movie[1],score[1],description[1]),
+      createData(3,movie[2],score[2],description[2]),
+      createData(4,movie[3],score[3],description[3]),
+      createData(5,movie[4],score[4],description[4]),
+      createData(6,movie[5],score[5],description[5]),
+      createData(7,movie[6],score[6],description[6]),
+      createData(8,movie[7],score[7],description[7]),
+      createData(9,movie[8],score[8],description[8]),
+      createData(10,movie[9],score[9],description[9]),
+      
       
     ];
   
  console.log(data);
 return(
   <Grid container className={classes.root}>
-  <Grid item xs={12}>
+  <Grid item xs={16}>
   <TableContainer component={Paper}>
       <Table sx={{ minWidth: 650 }} size="small" aria-label="a dense table">
+        
         <TableHead>
           <TableRow>
-            <TableCell>Title</TableCell>
-            <TableCell >Rating</TableCell>
-            <TableCell> Description</TableCell>
+            
+          <TableCell align="center"></TableCell>
+            <TableCell align="center">Title</TableCell>
+            <TableCell align="center">Rating</TableCell>
+            <TableCell align="center"> Description</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
           {rows.map((row) => (
-            <TableRow
-              key={row.name}
-              sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
-            >
-              <TableCell component="th" scope="row">
-                {row.name}
-              </TableCell>
-              <TableCell >{row.score}</TableCell>
-              <TableCell>{row.desc}</TableCell>
+            <TableRow>
+                <TableCell item key={row.num}>{row.num}</TableCell>
+                <TableCell item key={row.name}>{row.name}</TableCell>
+                <TableCell item key={row.score}>{row.score}</TableCell>
+                <TableCell item key={row.desc}>{row.desc}</TableCell>
+              
             </TableRow>
           ))}
         </TableBody>
