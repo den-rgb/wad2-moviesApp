@@ -8,11 +8,15 @@ import AddToWatchListIcon from '../components/cardIcons/addToWatchList'
 import Pagination from '@material-ui/lab/Pagination';
 import { makeStyles } from "@material-ui/core/styles";
 import Paper from '@material-ui/core/Paper';
+import { InfoOutlined } from "@material-ui/icons";
 
 const useStyles = makeStyles(theme=>({
    root:{
     padding: 1,
-    size:"large"
+    right:0,
+    position:'fixed',
+    
+    backgroundColor:theme.palette.secondary.main,
    }
 }));
 
