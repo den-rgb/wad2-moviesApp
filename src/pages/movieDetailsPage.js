@@ -15,6 +15,8 @@ const MovieDetailsPage = (props) => {
     getMovie
   );
 
+ 
+
   if (isLoading) {
     return <Spinner />;
   }
@@ -23,13 +25,14 @@ const MovieDetailsPage = (props) => {
     return <h1>{error.message}</h1>;
   }
 
+ 
 
   return (
     <>
       {movie ? (
         <>
           <PageTemplate movie={movie}>
-            <MovieDetails movie={movie} />
+            <MovieDetails movie={movie}  />
           </PageTemplate>
         </>
       ) : (

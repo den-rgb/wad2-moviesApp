@@ -30,9 +30,11 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const MovieDetails = ({ movie }) => {  // Don't miss this!
+const MovieDetails = ({ movie,movieCredits }) => {  // Don't miss this!
   const classes = useStyles();
   const [drawerOpen, setDrawerOpen] = useState(false);
+
+  
 
   return (
     <>
@@ -73,6 +75,12 @@ const MovieDetails = ({ movie }) => {  // Don't miss this!
 
             ))}
       </Paper>
+
+      <Paper>{movieCredits}</Paper>
+
+
+
+      
 
       <Fab
         color="secondary"

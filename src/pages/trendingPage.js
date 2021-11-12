@@ -13,11 +13,32 @@ import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 import { makeStyles } from "@material-ui/core/styles";
 
-const useStyles = makeStyles({
+const useStyles = makeStyles(theme=>({
   root: {
     padding: "20px",
   },
-});
+  tableCell1:{
+    backgroundColor:"black",
+    color:"white",
+    fontWeight:"bold"
+  },
+  tableCell2:{
+    backgroundColor:"lightblue",
+    fontWeight:"bold",
+    fontSize:16,
+  },
+  tableTop:{
+    backgroundColor:"black",
+    color:"white",
+    fontSize:20,
+  },
+  head:{
+    fontSize:40,
+    backgroundColor:theme.palette.secondary.main,
+    color:"white",
+    fontWeight:"bold"
+  }
+}));
 
 
 const TrendingMoviesPage = () => {
@@ -51,6 +72,8 @@ const TrendingMoviesPage = () => {
     )
     })
 
+   
+
     function createData(num,name,score,desc) {
       return { num,name,score,desc };
     }
@@ -66,32 +89,34 @@ const TrendingMoviesPage = () => {
       createData(8,movie[7],score[7],description[7]),
       createData(9,movie[8],score[8],description[8]),
       createData(10,movie[9],score[9],description[9]),
-      
-      
     ];
   
  console.log(data);
 return(
   <Grid container className={classes.root}>
   <Grid item xs={16}>
+  <Paper className={classes.head} align="center">
+    Top Ten Trending
+  </Paper>
+
   <TableContainer component={Paper}>
       <Table sx={{ minWidth: 650 }} size="small" aria-label="a dense table">
         
         <TableHead>
-          <TableRow>
+          <TableRow >
             
-          <TableCell align="center"></TableCell>
-            <TableCell align="center">Title</TableCell>
-            <TableCell align="center">Rating</TableCell>
-            <TableCell align="center"> Description</TableCell>
+          <TableCell className={classes.tableTop} align="center"></TableCell>
+            <TableCell className={classes.tableTop} align="center">Title</TableCell>
+            <TableCell  className={classes.tableTop} align="right">Rating</TableCell>
+            <TableCell className={classes.tableTop} align="center"> Description</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
           {rows.map((row) => (
             <TableRow>
-                <TableCell item key={row.num}>{row.num}</TableCell>
-                <TableCell item key={row.name}>{row.name}</TableCell>
-                <TableCell item key={row.score}>{row.score}</TableCell>
+                <TableCell className={classes.tableCell1} item key={row.num}>{row.num}</TableCell>
+                <TableCell className={classes.tableCell2}item key={row.name}>{row.name}</TableCell>
+                <TableCell className={classes.tableCell1} item key={row.score}>{row.score}</TableCell>
                 <TableCell item key={row.desc}>{row.desc}</TableCell>
               
             </TableRow>
