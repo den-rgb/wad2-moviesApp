@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import PageTemplate from "../components/templateMovieListPage";
 import { useQuery } from 'react-query'
 import Spinner from '../components/spinner'
@@ -7,22 +7,21 @@ import AddToFavoritesIcon from '../components/cardIcons/addToFavorites'
 import AddToWatchListIcon from '../components/cardIcons/addToWatchList'
 import Pagination from '@material-ui/lab/Pagination';
 import { makeStyles } from "@material-ui/core/styles";
+import Paper from '@material-ui/core/Paper';
 
-const useStyles = makeStyles({
+const useStyles = makeStyles(theme=>({
    root:{
-    display: 'block', 
-    padding: 30,
+    padding: 1,
     size:"large"
    }
-});
+}));
 
-const HomePage = (props) => {
+const HomePage = () => {
   const {  data, error, isLoading, isError }  = useQuery('discover', getMovies);
   const classes=useStyles();
- 
-  const handleOnChange=(e)=>{
-    
-  };
+  const [nextpage,setNextPage]=useState(false);
+  
+  
 
   if (isLoading) {
     return <Spinner />
@@ -33,8 +32,17 @@ const HomePage = (props) => {
   }  
   const movies = data.results;
 
- 
+  const slicedArray=movies.slice(0,10);
+  const slicedArray2=movies.slice(10,20);
+  
 
+  const handlePaginator=(()=>{
+    setNextPage(true);
+    
+    if(nextpage){
+      setNextPage(false);
+    }
+  })
 
   console.log(data);
 
@@ -46,14 +54,14 @@ const HomePage = (props) => {
   localStorage.setItem('watchList', JSON.stringify(watchList))
 
  
-  
 
   return (
     <div>
-      <Pagination className={classes.root}  count={5} onChange={(e)=>handleOnChange(e)} />
+      <Paper className={classes.root}>
+      <Pagination size="large" count={2} onChange={handlePaginator}/></Paper>
     <PageTemplate
         title="Discover Movies"
-        movies={movies}
+        movies={nextpage?slicedArray2:slicedArray}
         action={(movie) => {
           return 
           <>

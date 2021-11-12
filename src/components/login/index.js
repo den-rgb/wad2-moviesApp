@@ -61,6 +61,12 @@ const LoginForm = ({history }) => {
     history.push(pageURL);
   };
 
+ 
+
+ 
+ 
+  
+
   return (
     <Box component="div" className={classes.root}>
       <Typography component="h2" variant="h3">
@@ -120,7 +126,9 @@ const LoginForm = ({history }) => {
             color="primary"
             className={classes.submit}
             onClick={()=>{
-             handleMenuSelect("/");
+              
+              handleMenuSelect("/");
+              
             }}
           >
             Login

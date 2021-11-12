@@ -42,7 +42,9 @@ const App = () => {
         <Route path="/reviews/:id" component={MovieReviewPage} />
         <Route exact path="/movies/favorites" component={FavoriteMoviesPage} />
         <Route path="/movies/:id" component={MoviePage} />
+        <Route exact path="/page2" />
         <Route exact path="/" component={HomePage} />
+        
         <Redirect from="*" to="/" />
       </Switch></MoviesContextProvider>
     </BrowserRouter>
