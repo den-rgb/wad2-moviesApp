@@ -8,11 +8,11 @@ import CardHeader from "@material-ui/core/CardHeader";
 import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
 import FavoriteIcon from "@material-ui/icons/Favorite";
-import DeleteIcon from "@material-ui/icons/Delete";
+
 import WatchListIcon from "@material-ui/icons/PlaylistAdd"
 import CalendarIcon from "@material-ui/icons/CalendarTodayTwoTone";
 import StarRateIcon from "@material-ui/icons/StarRate";
-import IconButton from "@material-ui/core/IconButton";
+
 import Grid from "@material-ui/core/Grid";
 import img from '../../images/film-poster-placeholder.png'
 import { Link } from "react-router-dom";
@@ -125,12 +125,12 @@ export default function MovieCard({ movie, action }) {
       <CardActions disableSpacing>
         {action(movie)}
         
-      <ToggleButton size="small" value="check" selected={!selected} aria-label="add to favorites" onChange={()=>{
+      <ToggleButton value="check" selected={!selected} aria-label="add to favorites" onChange={()=>{
         setSelected(selected);
       }}>
         <AddToFavoritesIcon movie={movie}/>
     </ToggleButton>
-    <ToggleButton size="small" value="check" selected={selected} aria-label="remove from favorites" onChange={()=>{
+    <ToggleButton value="check" selected={selected} aria-label="remove from favorites" onChange={()=>{
         setSelected(!selected);
       }}><RemoveFromFavoritesIcon movie={movie}/>
          
