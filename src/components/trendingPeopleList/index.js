@@ -92,7 +92,7 @@ const TrendingPeopleList = () => {
  console.log(data);
 return(
   <Grid container className={classes.root}>
-  <Grid item xs={16}>
+  <Grid item xs={12}>
   <Paper className={classes.head} align="center">
     Top Ten Trending People Today!
   </Paper>

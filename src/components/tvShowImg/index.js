@@ -2,7 +2,7 @@ import React from "react";
 
 import { makeStyles } from "@material-ui/core/styles";
 
-import { getTrendingPeople } from "../../api/tmdb-api";
+import { getTvShows } from "../../api/tmdb-api";
 import { useQuery } from "react-query";
 import Spinner from '../spinner'
 
@@ -20,11 +20,11 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const TrendingPeopleImg = ({ movie,num}) => {
+const TvShowImg = ({ show,num}) => {
   const classes = useStyles();
   const { data , error, isLoading, isError } = useQuery(
-    ["images", { id: movie.id }],
-    getTrendingPeople
+    ["imagesTV", { id: show.id }],
+    getTvShows
   );
 
   if (isLoading) {
@@ -34,18 +34,18 @@ const TrendingPeopleImg = ({ movie,num}) => {
   if (isError) {
     return <h1>{error.message}</h1>;
   }
-  const images = data.results
+  const imagesTV = data.results
 
-  const img=images.map((img)=>{
+  const imgTV=imagesTV.map((imgTV)=>{
     return(
-         img.profile_path
+         imgTV.profile_path
     )
     })
   
 
   return (
-    <img className={classes.root} src={`https://image.tmdb.org/t/p/w185/${img[num]}`} alt={img[num]}></img>
+    <img className={classes.root} src={`https://image.tmdb.org/t/p/original/${imgTV[num]}`} alt={imgTV[num]}></img>
   );
 };
 
-export default TrendingPeopleImg;
+export default TvShowImg;
