@@ -51,7 +51,7 @@ const signInWithEmailAndPassword = async (email, password) => {
     try {
       const res = await createUserWithEmailAndPassword(auth,email, password);
       const user = res.user;
-      await db.collection("users").add({
+      await db.collection("newUsers").add({
         uid: user.uid,
         name,
         authProvider: "local",

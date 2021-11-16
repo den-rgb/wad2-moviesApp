@@ -26,6 +26,8 @@ const queryClient = new QueryClient({
   },
 });
 
+
+
 const App = () => {
   return (
     <QueryClientProvider client={queryClient}>
@@ -33,16 +35,17 @@ const App = () => {
           <SiteHeader /> <MoviesContextProvider>
             {" "}     
       <Switch>
-        <Route exact path="/register" component ={Register}/>
+        
         <Route exact path="/movies/trending" component ={TrendingMoviesPage}/>
         <Route exact path="/login" component={Login}/>
+        <Route exact path="/register" component ={Register}/>
         <Route exact path="/movies/watchList" component={WatchListPage}/>
         <Route exact path="/reviews/form" component={AddMovieReviewPage} />
         <Route exact path="/movies/upcoming" component={UpcomingMoviesPage} />
         <Route path="/reviews/:id" component={MovieReviewPage} />
         <Route exact path="/movies/favorites" component={FavoriteMoviesPage} />
         <Route path="/movies/:id" component={MoviePage} />
-        <Route exact path="/page2" />
+        
         <Route exact path="/" component={HomePage} />
         
         <Redirect from="*" to="/" />

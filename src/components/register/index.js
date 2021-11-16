@@ -10,7 +10,7 @@ import { withRouter } from "react-router-dom";
 import MenuItem from "@material-ui/core/MenuItem";
 import Grid from "@material-ui/core/Grid";
 
-
+import { signInWithGoogle } from "../../firebase";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -140,6 +140,7 @@ const Registry = ({history }) => {
             color="primary"
             className={classes.submit}
             onClick={()=>{
+              handleMenuSelect("/")
               localStorage.setItem("userName",JSON.stringify(userName));
               localStorage.setItem("userName2","");
               localStorage.setItem("email",JSON.stringify(email));
@@ -171,6 +172,16 @@ const Registry = ({history }) => {
             
           >
             Back to Login
+          </Button>
+
+          <Button
+            type="login"
+            variant="contained"
+            color="primary"
+            className={classes.submit}
+            onClick={signInWithGoogle}
+          >
+           Sign up with Google
           </Button>
 
         </Box></Grid></Grid>

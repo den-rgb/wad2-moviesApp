@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState,useEffect } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
@@ -15,6 +15,10 @@ import useMediaQuery from "@material-ui/core/useMediaQuery";
 import { Avatar } from "@material-ui/core";
 import LoginIcon from "@material-ui/icons/Person"
 
+import { Link, useHistory } from "react-router-dom";
+import { db,auth,signInWithGoogle } from "../../firebase";
+import { useAuthState } from "react-firebase-hooks/auth";
+
 const useStyles = makeStyles((theme) => ({
   title: {
     flexGrow: 1,
@@ -29,14 +33,30 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 
-const SiteHeader = ( { history }) => {
+const SiteHeader = () => {
   const classes = useStyles();
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("md"));
-  var logUserName="";
-  const activeuser = localStorage.getItem("userName");
+ const localName=localStorage.getItem("userName");
+  
+  const [user, loading, error] = useAuthState(auth);
+  const [userName, setName] = useState("");
+  const history = useHistory();
+  const fetchUserName = async () => {
+    try {
+      const query = await db
+        .collection("newUsers")
+        .where("uid", "==", user?.uid)
+        .get();
+      const data = await query.docs[0].data();
+      setName(data.name);
+    } catch (err) {
+      console.error(err);
+      alert("An error occured while fetching user data");
+    }
+  };
   
   
   
@@ -50,28 +70,20 @@ const SiteHeader = ( { history }) => {
   ];
 
   
-   
 
-  const handleLogOut=()=>{
-    localStorage.setItem("logUser",localStorage.getItem("userName"));
-    localStorage.setItem("userName","");
-    console.log(localStorage.getItem("logUser"));
-    handleMenuSelect('/');
-  }
-
-  if(activeuser==="undefined"||activeuser==="null"||activeuser===null){
+  if(localName==="undefined"||localName==="null"||localName===null){
     localStorage.setItem("userName","");
   }
 
   const checkTrue=()=>{
-     if(activeuser===""||activeuser===null){
+     if(localName===""||localName===null){
       handleMenuSelect('/login');
       
-     }else if(activeuser==="undefined"||activeuser==="null"){
+     }else if(localName==="undefined"||localName==="null"){
       handleMenuSelect('/login');
       
      }else{
-       console.log(activeuser);
+       console.log(localName);
      }
 
   };
@@ -94,7 +106,7 @@ const SiteHeader = ( { history }) => {
                       onClick={() => checkTrue()}
                     >
                       <LoginIcon color="primary" fontSize="large"/>
-                      Welcome {activeuser}
+                      Welcome {localName}
                     </IconButton>
             {isMobile ? (
               <>
@@ -107,6 +119,7 @@ const SiteHeader = ( { history }) => {
                 >
                   <MenuIcon />
                 </IconButton>
+              
                 <Menu
                   id="menu-appbar"
                   anchorEl={anchorEl}
@@ -142,17 +155,20 @@ const SiteHeader = ( { history }) => {
                   >
                     {opt.label}
                   </Button>
+
+                  
                 ))}
               </>
             )}
-                    <Button
-                      className={activeuser!=""?classes.isVisible : classes.notVisible}
-                      onClick={()=>handleLogOut()}
+            <Button
+                      className={localName!=""?classes.isVisible : classes.notVisible}
+                      onClick={localStorage.setItem("userName","")}
                     >
                       LogOut
-                    </Button>
+                    </Button>      
                   
         </Toolbar>
+        
       </AppBar>
       <div className={classes.offset} />
     </>

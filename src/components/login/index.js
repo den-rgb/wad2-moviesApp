@@ -4,13 +4,15 @@ import TextField from "@material-ui/core/TextField";
 import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 import Box from "@material-ui/core/Box";
-import Link from "@material-ui/core/Link";
+
 import useForm from "react-hook-form";
 import { withRouter } from "react-router-dom";
 import MenuItem from "@material-ui/core/MenuItem";
 import Grid from "@material-ui/core/Grid";
 
 
+import { auth,signInWithGoogle } from "../../firebase";
+import { useAuthState } from "react-firebase-hooks/auth";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -70,17 +72,21 @@ const useStyles = makeStyles((theme) => ({
   
 }));
 
-const LoginForm = ({history }) => {
+const LoginForm = ({history}) => {
   const classes = useStyles();
   const { register, handleSubmit, errors, reset } = useForm();
-  const [email,setEmail]=useState("");
-  const [password,setPassword]=useState("");
-  const [user, setUser]= useState();
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [user, loading, error] = useAuthState(auth);
+ 
+  
   
  
   const handleMenuSelect = (pageURL) => {
     history.push(pageURL);
   };
+
+
 
  
   const verify=()=>{
@@ -114,7 +120,7 @@ const LoginForm = ({history }) => {
           name="email"
           value={email}
           autoFocus
-          onChange={({ target }) => setEmail(target.value)}
+          onChange={(e) => setEmail(e.target.value)}
           inputRef={register({ 
               required: true,
              })}
@@ -130,7 +136,7 @@ const LoginForm = ({history }) => {
           id="password"
           label="Password"
           name="password"
-          onChange={({ target }) => setPassword(target.value)}
+          onChange={(e) => setPassword(e.target.value)}
           inputRef={register({  
             required: true,
             minLength: { value: 5, message:"Password must be longer!!"},
@@ -162,12 +168,7 @@ const LoginForm = ({history }) => {
             color="secondary"
             align={"center"}
             className={classes.submit}
-            onClick={() => {
-              reset({
-                email: "",
-                password: "",
-              });
-            }}
+           
           >
             Reset
           </Button>
@@ -178,10 +179,20 @@ const LoginForm = ({history }) => {
             color="active"
             className={classes.reg}
             onClick={() => {
-              handleMenuSelect("/register");
+              
+              history.push("/register")
             }}
           >
             Register
+          </Button>
+
+          <Button
+            type="register"
+            variant="contained"
+            color="primary"
+            className={classes.log}
+             onClick={signInWithGoogle}>
+          Login with Google
           </Button>
 
         </Box></Grid></Grid>
