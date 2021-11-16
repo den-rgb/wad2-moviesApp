@@ -16,7 +16,7 @@ import { Avatar } from "@material-ui/core";
 import LoginIcon from "@material-ui/icons/Person"
 
 import { Link, useHistory } from "react-router-dom";
-import { db,auth,signInWithGoogle } from "../../firebase";
+import { db,auth,signInWithGoogle, logout } from "../../firebase";
 import { useAuthState } from "react-firebase-hooks/auth";
 
 const useStyles = makeStyles((theme) => ({
@@ -29,6 +29,8 @@ const useStyles = makeStyles((theme) => ({
   },
   isVisible:{
     visibility:"visible",
+    right:"5%",
+    zIndex:-1
   }
 }));
 
@@ -40,23 +42,12 @@ const SiteHeader = () => {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("md"));
  const localName=localStorage.getItem("userName");
-  
+  const googleName=localStorage.getItem("goog");
   const [user, loading, error] = useAuthState(auth);
   const [userName, setName] = useState("");
   const history = useHistory();
-  const fetchUserName = async () => {
-    try {
-      const query = await db
-        .collection("newUsers")
-        .where("uid", "==", user?.uid)
-        .get();
-      const data = await query.docs[0].data();
-      setName(data.name);
-    } catch (err) {
-      console.error(err);
-      alert("An error occured while fetching user data");
-    }
-  };
+
+  
   
   
   
@@ -67,6 +58,8 @@ const SiteHeader = () => {
     { label: "Upcoming", path: "/movies/upcoming" },
     { label: "Your WatchList", path: "/movies/watchList" },
     {label: "Trending" , path:"/movies/trending"},
+    {label:handleLogout(),path:"/login"},
+    
   ];
 
   
@@ -96,16 +89,27 @@ const SiteHeader = () => {
     setAnchorEl(event.currentTarget);
   };
 
+  function handleLogout(){
+    
+    localStorage.setItem("userName","");
+    localStorage.setItem("goog","");
+    logout();
+    
+  }
+
 
   return (
     <>
       <AppBar position="fixed" color="secondary">
         <Toolbar>
+        
                     <IconButton
                       
                       onClick={() => checkTrue()}
                     >
                       <LoginIcon color="primary" fontSize="large"/>
+                      
+
                       Welcome {localName}
                     </IconButton>
             {isMobile ? (
@@ -119,7 +123,7 @@ const SiteHeader = () => {
                 >
                   <MenuIcon />
                 </IconButton>
-              
+                 
                 <Menu
                   id="menu-appbar"
                   anchorEl={anchorEl}
@@ -135,13 +139,16 @@ const SiteHeader = () => {
                   open={open}
                   onClose={() => setAnchorEl(null)}
                 >
+                   
                   {menuOptions.map((opt) => (
                     <MenuItem
+                      
                       key={opt.label}
                       onClick={() => handleMenuSelect(opt.path)}
                     >
                       {opt.label}
                     </MenuItem>
+                    
                   ))}
                 </Menu>
               </>
@@ -160,12 +167,7 @@ const SiteHeader = () => {
                 ))}
               </>
             )}
-            <Button
-                      className={localName!=""?classes.isVisible : classes.notVisible}
-                      onClick={localStorage.setItem("userName","")}
-                    >
-                      LogOut
-                    </Button>      
+            <Button className={localName!==""?classes.isVisible:classes.notVisible} onClick={handleLogout}>LogOut</Button>
                   
         </Toolbar>
         

@@ -1,5 +1,5 @@
 import firebase from "firebase/compat/app";
-import { getAuth,createUserWithEmailAndPassword,GoogleAuthProvider,signInWithPopup,signOut } from "@firebase/auth";
+import { getAuth,GoogleAuthProvider,signInWithPopup,signOut } from "@firebase/auth";
 import {getFirestore} from "@firebase/firestore";
 const firebaseConfig = {
     apiKey: "AIzaSyD8yrqjX8Y-DPkWsRLh8WBj2gIYnrUYg6k",
@@ -38,40 +38,6 @@ const signInWithGoogle = async () => {
   }
 };
 
-const signInWithEmailAndPassword = async (email, password) => {
-    try {
-      await signInWithEmailAndPassword(auth,email, password);
-    } catch (err) {
-      console.error(err);
-      alert(err.message);
-    }
-  };
-
-  const registerWithEmailAndPassword = async (name, email, password) => {
-    try {
-      const res = await createUserWithEmailAndPassword(auth,email, password);
-      const user = res.user;
-      await db.collection("newUsers").add({
-        uid: user.uid,
-        name,
-        authProvider: "local",
-        email,
-      });
-    } catch (err) {
-      console.error(err);
-      alert(err.message);
-    }
-  };
-
-  const sendPasswordResetEmail = async (email) => {
-    try {
-      await sendPasswordResetEmail(auth,email);
-      alert("Password reset link sent!");
-    } catch (err) {
-      console.error(err);
-      alert(err.message);
-    }
-  };
 
   const logout = () => {
     signOut(auth);
@@ -81,8 +47,6 @@ const signInWithEmailAndPassword = async (email, password) => {
     auth,
     db,
     signInWithGoogle,
-    signInWithEmailAndPassword,
-    registerWithEmailAndPassword,
-    sendPasswordResetEmail,
+    
     logout,
   };

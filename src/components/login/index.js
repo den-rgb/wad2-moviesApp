@@ -11,7 +11,7 @@ import MenuItem from "@material-ui/core/MenuItem";
 import Grid from "@material-ui/core/Grid";
 
 
-import { auth,signInWithGoogle } from "../../firebase";
+import { auth,db,signInWithGoogle } from "../../firebase";
 import { useAuthState } from "react-firebase-hooks/auth";
 
 const useStyles = makeStyles((theme) => ({
@@ -74,12 +74,19 @@ const useStyles = makeStyles((theme) => ({
 
 const LoginForm = ({history}) => {
   const classes = useStyles();
+
   const { register, handleSubmit, errors, reset } = useForm();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [user, loading, error] = useAuthState(auth);
  
-  
+  useEffect(() => {
+    if (loading) {
+      // maybe trigger a loading screen
+      return;
+    }
+    if (user) history.replace("/");
+  }, [user, loading]);
   
  
   const handleMenuSelect = (pageURL) => {
@@ -89,7 +96,8 @@ const LoginForm = ({history}) => {
 
 
  
-  const verify=()=>{
+  function verify(){
+    console.log( localStorage.getItem("logUser"));
     if(email===localStorage.getItem("email")&&password===localStorage.getItem("password")){
        localStorage.setItem("userName",localStorage.getItem("logUser"));
        history.push("/");
@@ -168,7 +176,12 @@ const LoginForm = ({history}) => {
             color="secondary"
             align={"center"}
             className={classes.submit}
-           
+            onClick={() => {
+              reset({
+                email: "",
+                password: "",
+              });
+            }}
           >
             Reset
           </Button>
@@ -191,7 +204,10 @@ const LoginForm = ({history}) => {
             variant="contained"
             color="primary"
             className={classes.log}
-             onClick={signInWithGoogle}>
+             onClick={signInWithGoogle}
+             
+             >
+              
           Login with Google
           </Button>
 

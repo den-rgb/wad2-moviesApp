@@ -10,7 +10,9 @@ import { withRouter } from "react-router-dom";
 import MenuItem from "@material-ui/core/MenuItem";
 import Grid from "@material-ui/core/Grid";
 
-import { signInWithGoogle } from "../../firebase";
+
+import { auth,db,signInWithGoogle } from "../../firebase";
+import { useAuthState } from "react-firebase-hooks/auth";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -49,7 +51,16 @@ const Registry = ({history }) => {
   const [userName2]=useState("");
  
   
+  const [user, loading, error] = useAuthState(auth);
  
+  useEffect(() => {
+    if (loading) {
+      
+      return;
+    }
+    if (user) history.replace("/");
+  }, [user, loading]);
+
   const handleMenuSelect = (pageURL) => {
     history.push(pageURL);
   };
@@ -59,7 +70,7 @@ const Registry = ({history }) => {
       
   };
 
-
+  
  
   
 
@@ -140,9 +151,9 @@ const Registry = ({history }) => {
             color="primary"
             className={classes.submit}
             onClick={()=>{
-              handleMenuSelect("/")
+              handleMenuSelect("/");
               localStorage.setItem("userName",JSON.stringify(userName));
-              localStorage.setItem("userName2","");
+              localStorage.setItem("logUser",JSON.stringify(userName));
               localStorage.setItem("email",JSON.stringify(email));
               localStorage.setItem("password",JSON.stringify(password));
             }}
