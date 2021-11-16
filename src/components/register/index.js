@@ -8,7 +8,7 @@ import Link from "@material-ui/core/Link";
 import useForm from "react-hook-form";
 import { withRouter } from "react-router-dom";
 import MenuItem from "@material-ui/core/MenuItem";
-
+import Grid from "@material-ui/core/Grid";
 
 
 
@@ -20,30 +20,22 @@ const useStyles = makeStyles((theme) => ({
     alignItems: "center",
   },
   form: {
-    width: "100%",
-    "& > * ": {
-      marginTop: theme.spacing(2),
-    },
-  },
-  userField: {
-    width: "40ch",
-    left:425,
-  },
-  passwordField:{
-    width:"40ch",
-    left:30,
-    top:100,
-  },
-  submit: {
-    marginRight: theme.spacing(2),
-    marginTop: theme.spacing(2),
+    width:"30%",
+    position:"relative",
+    display:"block"
+  
   },
   
+  
   root2: {
-    marginRight: theme.spacing(2),
-    flexDirection: "column",
-    width:"40ch",
-    marginTop:theme.spacing(20),
+    padding:"10px",
+    display:"flex",
+    flexDirection:"column",
+    width:"100%",
+    position:"relative",
+   
+    border:"3px",
+    borderStyle:"inset"
   },
   
 }));
@@ -139,7 +131,8 @@ const Registry = ({history }) => {
         )}
         
         
-
+        <Grid container align={"center"}>
+   <Grid xs={12}>
         <Box className={classes.root2}>
           <Button
             type="Register"
@@ -180,7 +173,7 @@ const Registry = ({history }) => {
             Back to Login
           </Button>
 
-        </Box>
+        </Box></Grid></Grid>
       </form>
     </Box>
   );

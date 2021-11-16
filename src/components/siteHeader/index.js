@@ -35,9 +35,9 @@ const SiteHeader = ( { history }) => {
   const open = Boolean(anchorEl);
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("md"));
-  
+  var logUserName="";
   const activeuser = localStorage.getItem("userName");
-  const activeuser2=localStorage.getItem("userName2");
+  
   
   
 
@@ -53,8 +53,9 @@ const SiteHeader = ( { history }) => {
    
 
   const handleLogOut=()=>{
+    localStorage.setItem("logUser",localStorage.getItem("userName"));
     localStorage.setItem("userName","");
-    
+    console.log(localStorage.getItem("logUser"));
     handleMenuSelect('/');
   }
 

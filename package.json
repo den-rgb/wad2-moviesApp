@@ -9,6 +9,7 @@
     "@mui/icons-material": "^5.1.0",
     "@mui/material": "^5.1.0",
     "axios": "^0.24.0",
+    "firebase": "^9.4.1",
     "primereact": "^7.0.0",
     "prop-types": "^15.7.2",
     "react": "^17.0.1",

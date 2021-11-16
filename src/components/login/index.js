@@ -8,7 +8,7 @@ import Link from "@material-ui/core/Link";
 import useForm from "react-hook-form";
 import { withRouter } from "react-router-dom";
 import MenuItem from "@material-ui/core/MenuItem";
-
+import Grid from "@material-ui/core/Grid";
 
 
 
@@ -20,22 +20,43 @@ const useStyles = makeStyles((theme) => ({
     alignItems: "center",
   },
   form: {
-    width: "100%",
-    "& > * ": {
-      marginTop: theme.spacing(2),
-    },
+    width:"30%",
+    position:"relative",
+    display:"block"
   },
-  userField: {
-    width: "40ch",
-    left:425,
-  },
-  passwordField:{
-    width:"40ch",
-    left:30,
-    top:100,
-  },
+ 
   submit: {
-    marginRight: theme.spacing(2),
+    padding:"10px",
+    display:"flex",
+    flexDirection:"column",
+    width:"100%",
+    position:"relative",
+    paddingRight:"10px",
+    right:"30%",
+    border:"3px",
+    borderStyle:"inset"
+  },
+  log:{
+    padding:"10px",
+    paddingLeft:"10px",
+    display:"flex",
+    flexDirection:"column",
+    width:"110%",
+    position:"relative",
+    border:"3px",
+    borderStyle:"inset",
+    left:"10%"
+  },
+  reg:{
+    padding:"10px",
+    paddingLeft:"10px",
+    display:"flex",
+    flexDirection:"column",
+    width:"110%",
+    position:"relative",
+    border:"3px",
+    borderStyle:"inset",
+    left:"35%"
   },
   
   root2: {
@@ -62,7 +83,12 @@ const LoginForm = ({history }) => {
   };
 
  
-
+  const verify=()=>{
+    if(email===localStorage.getItem("email")&&password===localStorage.getItem("password")){
+       localStorage.setItem("userName",localStorage.getItem("logUser"));
+       history.push("/");
+    }
+  }
  
  
   
@@ -74,12 +100,12 @@ const LoginForm = ({history }) => {
       </Typography>
       <form
         className={classes.form}
-       
-        noValidate
+        align={"center"}
+        
       >
           <TextField
           
-          className={classes.userField}
+          
           variant="outlined"
           margin="normal"
           required
@@ -96,7 +122,7 @@ const LoginForm = ({history }) => {
         
         
          <TextField
-          className={classes.passwordField}
+          
           variant="outlined"
           margin="normal"
           required
@@ -118,18 +144,15 @@ const LoginForm = ({history }) => {
         )}
         
         
-
-        <Box className={classes.root2}>
+ <Grid container align={"center"}>
+   <Grid xs={12}>
+        <Box className={classes.form}>
           <Button
             type="Login"
             variant="contained"
             color="primary"
-            className={classes.submit}
-            onClick={()=>{
-              
-              handleMenuSelect("/");
-              
-            }}
+            className={classes.log}
+            onSubmit={verify}
           >
             Login
           </Button>
@@ -137,6 +160,7 @@ const LoginForm = ({history }) => {
             type="reset"
             variant="contained"
             color="secondary"
+            align={"center"}
             className={classes.submit}
             onClick={() => {
               reset({
@@ -152,7 +176,7 @@ const LoginForm = ({history }) => {
             type="register"
             variant="contained"
             color="active"
-            className={classes.submit}
+            className={classes.reg}
             onClick={() => {
               handleMenuSelect("/register");
             }}
@@ -160,7 +184,7 @@ const LoginForm = ({history }) => {
             Register
           </Button>
 
-        </Box>
+        </Box></Grid></Grid>
       </form>
     </Box>
   );
