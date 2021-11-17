@@ -117,11 +117,7 @@ const SeasonList = () => {
     )
     })
 
-    const imgTV=shows.map((imgTV)=>{
-        return(
-             imgTV.backdrop_path
-        )
-        })
+    
   
 
    
@@ -139,10 +135,11 @@ const SeasonList = () => {
   
  console.log(data);
 return(
+    
   <Grid container className={classes.root}>
   <Grid item xs={12}>
   <Paper className={classes.head} align="center">
-    Top Ten Trending Shows Today!
+    Top 5 Trending Shows Today!
   </Paper>
 
   <TableContainer component={Paper}>
@@ -202,6 +199,7 @@ return(
     </TableContainer>
     
     </Grid></Grid>
+    
 );
 
 };

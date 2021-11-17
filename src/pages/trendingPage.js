@@ -98,7 +98,7 @@ return(
   <TrendingPeopleList/>)}
   
   {!isListOpen2 &&(
-    <Paper  className={classes.root}>Top Ten Trending Movies Today!<DownArrow fontSize="large"/></Paper>
+    <Paper  className={classes.root}>Top Ten Trending People Today!<DownArrow fontSize="large"/></Paper>
   )}
   
   </Button>
@@ -110,7 +110,7 @@ return(
   <TrendingShowsList/>)}
   
   {!isListOpen3 &&(
-    <Paper  className={classes.root}>Top Ten Trending Movies Today!<DownArrow fontSize="large"/></Paper>
+    <Paper  className={classes.root}>Top 5 Trending Shows Today!<DownArrow fontSize="large"/></Paper>
   )}
   
   </Button>
