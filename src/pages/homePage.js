@@ -5,10 +5,12 @@ import Spinner from '../components/spinner'
 import {getMovies} from '../api/tmdb-api'
 import AddToFavoritesIcon from '../components/cardIcons/addToFavorites'
 import AddToWatchListIcon from '../components/cardIcons/addToWatchList'
-import Pagination from '@material-ui/lab/Pagination';
+import Pagination from '@mui/material/Pagination';
 import { makeStyles } from "@material-ui/core/styles";
 import Paper from '@material-ui/core/Paper';
-import { InfoOutlined } from "@material-ui/icons";
+import { InfoOutlined, PinDropSharp } from "@material-ui/icons";
+
+
 
 const useStyles = makeStyles(theme=>({
    root:{
@@ -21,10 +23,44 @@ const useStyles = makeStyles(theme=>({
 }));
 
 const HomePage = () => {
-  const {  data, error, isLoading, isError }  = useQuery('discover', getMovies);
-  const classes=useStyles();
-  const [nextpage,setNextPage]=useState(false);
+
+  const [page,setPage]=useState(1);
   
+  
+  //const {  data, error, isLoading, isError }  = useQuery('discover', getMovies);
+  const classes=useStyles();
+  
+  
+  const fetchProjects = (page = 1) => fetch(`https://api.themoviedb.org/3/discover/movie?api_key=${process.env.REACT_APP_TMDB_KEY}&language=en-US&include_adult=false&include_video=false&page=` + page).then((response) => {
+    if (!response.ok) {
+      throw new Error(response.json().message);
+    }
+    return response.json();
+  })
+  .catch((error) => {
+     throw error
+  });
+ 
+  const {
+    isLoading,
+     isError,
+     error,
+     data,
+    isFetching,
+    isPreviousData,
+  } = useQuery(['discover', page], () => fetchProjects(page), { keepPreviousData : true })
+
+  
+ 
+ 
+  function handleOnChange(event){
+    
+    console.log("p"+parseInt(event.currentTarget.textContext));
+      setPage(event.currentTarget.textContext);
+    
+   }
+  
+ 
   
 
   if (isLoading) {
@@ -35,18 +71,13 @@ const HomePage = () => {
     return <h1>{error.message}</h1>
   }  
   const movies = data.results;
-
-  const slicedArray=movies.slice(0,10);
-  const slicedArray2=movies.slice(10,20);
+  const pageNum=data.total_pages;
   
 
-  const handlePaginator=(()=>{
-    setNextPage(true);
-    
-    if(nextpage){
-      setNextPage(false);
-    }
-  })
+ 
+  
+
+  
 
   console.log(data);
 
@@ -62,10 +93,11 @@ const HomePage = () => {
   return (
     <div>
       <Paper className={classes.root}>
-      <Pagination size="large" count={2} onChange={handlePaginator}/></Paper>
+      <Pagination size="large" count={pageNum} onChange={(event,val)=>setPage(val)} /></Paper>
+      {isFetching ? <span> Loading...</span> : null}{' '}
     <PageTemplate
         title="Discover Movies"
-        movies={nextpage?slicedArray2:slicedArray}
+        movies={movies}
         action={(movie) => {
           return 
           <>
