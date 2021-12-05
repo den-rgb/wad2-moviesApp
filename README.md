@@ -2,7 +2,8 @@
 
 **Denis Moskalenko (20088764) W3 (Games)**
 
-#**_List of Added Features_**
+**_List of Added Features_**
+
 #**Trending Page**
 #**Login and Register using Firebase and localStorage**
 #**3 new endpoints: (Trending Tv Shows) , (Trending People) , (Trending Movies)**
