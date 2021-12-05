@@ -53,12 +53,7 @@ const HomePage = () => {
   
  
  
-  function handleOnChange(event){
-    
-    console.log("p"+parseInt(event.currentTarget.textContext));
-      setPage(event.currentTarget.textContext);
-    
-   }
+  
   
  
   
