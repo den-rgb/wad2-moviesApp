@@ -12,8 +12,7 @@ import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 import { makeStyles } from "@material-ui/core/styles";
-import TvShowImg from "../tvShowImg";
-import { Typography } from "@material-ui/core";
+
 
 
 const useStyles = makeStyles(theme=>({
@@ -23,51 +22,8 @@ const useStyles = makeStyles(theme=>({
     
     
   },
-  tableCell1:{
-    backgroundColor:"black",
-    color:"white",
-    fontWeight:"bold"
-  },
-  chucky:{
-    backgroundImage:`url("https://image.tmdb.org/t/p/w1280/xAKMj134XHQVNHLC6rWsccLMenG.jpg")`,
-    backgroundSize:"cover",
-    fontSize:30,
-    fontWeight:"bold",
-    display:"block",
-    padding:"70px",
-  },
-  squid:{
-    backgroundImage:`url("https://image.tmdb.org/t/p/w1280/qw3J9cNeLioOLoR68WX7z79aCdK.jpg")`,
-    backgroundSize:"cover",
-    fontSize:30,
-    fontWeight:"bold",
-    display:"block",
-    padding:"70px",
-  },
-  arcane:{
-    backgroundImage:`url("https://image.tmdb.org/t/p/w1280/rkB4LyZHo1NHXFEDHl9vSD9r1lI.jpg")`,
-    backgroundSize:"cover",
-    fontSize:30,
-    fontWeight:"bold",
-    display:"block",
-    padding:"70px",
-  },
-  maradona:{
-    backgroundImage:`url("https://image.tmdb.org/t/p/w1280/auuN4uAvn6KiqyYX5r7BsXrMPNx.jpg")`,
-    backgroundSize:"cover",
-    fontSize:30,
-    fontWeight:"bold",
-    display:"block",
-    padding:"70px",
-  },
-  rachael:{
-    backgroundImage:`url("https://image.tmdb.org/t/p/w1280/oC9SgtJTDCEpWnTBtVGoAvjl5hb.jpg")`,
-    backgroundSize:"cover",
-    fontSize:30,
-    fontWeight:"bold",
-    display:"block",
-    padding:"70px",
-  },
+  
+  
   tableTop:{
     backgroundColor:"black",
     color:"white",
@@ -100,8 +56,7 @@ const SeasonList = () => {
   
   const {  data, error, isLoading, isError }  = useQuery('tv', getTvShows);
   const [isShown,setIsShown]=useState(false);
-  const classes = useStyles();
-
+  const classes=useStyles();
   if (isLoading) {
     return <Spinner />
   }
@@ -117,21 +72,29 @@ const SeasonList = () => {
     )
     })
 
-    
+    const imgTV=shows.map((imgTV)=>{
+      return(
+           imgTV.backdrop_path
+      )
+      })
+
   
 
-   
-
-    function createData(name) {
-      return { name };
+  function createData(name) {
+    return { name };
     }
     
-    const rows = [
-      createData(showTitle),
-      
-      
-     
+  const rows = [
+    createData(showTitle),
     ];
+  
+  
+
+console.log(`https://image.tmdb.org/t/p/w780/${imgTV[0]}`);
+  
+
+
+  
   
  console.log(data);
 return(
@@ -157,38 +120,75 @@ return(
         <TableBody>
           {rows.map((row) => (
             <TableRow>
+    
                
-                <TableCell className={classes.chucky} item key={row.name} 
+                <TableCell style={{
+                   backgroundImage:`url(https://image.tmdb.org/t/p/w780/${imgTV[0]})`,
+                   backgroundSize:"cover",
+                   fontSize:30,
+                   fontWeight:"bold",
+                   display:"block",
+                   padding:"70px",
+                }} item key={row.name} 
                 onMouseEnter={()=>setIsShown(true)}
                 onMouseLeave={()=>setIsShown(false)}>
-                    {isShown &&( <Paper className={classes.text}>{row.name[0]} </Paper>)}
+                    {isShown &&( <Paper className={classes.text}>{row.name[0]}</Paper>)}
                 </TableCell>
 
-                <TableCell className={classes.squid} item 
+                <TableCell style={{
+                   backgroundImage:`url(https://image.tmdb.org/t/p/w780/${imgTV[1]})`,
+                   backgroundSize:"cover",
+                   fontSize:30,
+                   fontWeight:"bold",
+                   display:"block",
+                   padding:"70px",
+                }} item key={row.name} 
                 onMouseEnter={()=>setIsShown(true)}
                 onMouseLeave={()=>setIsShown(false)}>
-                    {isShown &&( <Paper className={classes.text}>{row.name[1]} </Paper>)}
+                    {isShown &&( <Paper className={classes.text}>{row.name[1]}</Paper>)}
                 </TableCell>
 
-                <TableCell className={classes.arcane} item 
+                <TableCell style={{
+                   backgroundImage:`url(https://image.tmdb.org/t/p/w780/${imgTV[2]})`,
+                   backgroundSize:"cover",
+                   fontSize:30,
+                   fontWeight:"bold",
+                   display:"block",
+                   padding:"70px",
+                }} item key={row.name} 
                 onMouseEnter={()=>setIsShown(true)}
                 onMouseLeave={()=>setIsShown(false)}>
-                    {isShown &&( <Paper className={classes.text}>{row.name[2]} </Paper>)}
+                    {isShown &&( <Paper className={classes.text}>{row.name[2]}</Paper>)}
                 </TableCell>
 
-                <TableCell className={classes.maradona} item 
+                <TableCell style={{
+                   backgroundImage:`url(https://image.tmdb.org/t/p/w780/${imgTV[3]})`,
+                   backgroundSize:"cover",
+                   fontSize:30,
+                   fontWeight:"bold",
+                   display:"block",
+                   padding:"70px",
+                }} item key={row.name} 
                 onMouseEnter={()=>setIsShown(true)}
                 onMouseLeave={()=>setIsShown(false)}>
-                    {isShown &&( <Paper className={classes.text}>{row.name[3]} </Paper>)}
+                    {isShown &&( <Paper className={classes.text}>{row.name[3]}</Paper>)}
                 </TableCell>
 
-                <TableCell className={classes.rachael} item 
+                <TableCell style={{
+                   backgroundImage:`url(https://image.tmdb.org/t/p/w780/${imgTV[4]})`,
+                   backgroundSize:"cover",
+                   fontSize:30,
+                   fontWeight:"bold",
+                   display:"block",
+                   padding:"70px",
+                }} item key={row.name} 
                 onMouseEnter={()=>setIsShown(true)}
                 onMouseLeave={()=>setIsShown(false)}>
-                    {isShown &&( <Paper className={classes.text}>{row.name[5]} </Paper>)}
+                    {isShown &&( <Paper className={classes.text}>{row.name[4]}</Paper>)}
                 </TableCell>
 
-               
+                
+                
 
             </TableRow>
            
