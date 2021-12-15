@@ -61,25 +61,25 @@ Favourite Toggle
 
 Additional storybook implementations.
 
-![storybook](src/images/storybook.JPG)
+![storybook](https://user-images.githubusercontent.com/59964862/146231873-affdfe2b-f78d-4922-8ae9-9d407437997c.PNG)
 ### UI Design.
 
 
 Registry Page with Firebase Auth
-![register](src\images\register.PNG)
+![register](https://user-images.githubusercontent.com/59964862/146231681-e217036d-f333-4847-b8ee-1294d246e142.PNG)
 
 Login Page with Firebase Auth
-![login](src\images\login.PNG)
+![login](https://user-images.githubusercontent.com/59964862/146231679-a7ac5a8b-ee83-4a92-9b7c-98e008ab68e9.PNG)
 
 Home Page with Pagination and toggle
-![home](src\images\home.PNG)
+![home](https://user-images.githubusercontent.com/59964862/146231670-d40b2e6f-2f54-47cc-a825-801e0e26a36b.PNG)
 
 Trending Page with 3 tmdb endpoints 
-![trending](src\images\trending.PNG)
+![trending](https://user-images.githubusercontent.com/59964862/146231664-c342a741-0738-4c5a-8a9f-15e09f6a9700.PNG)
 
 >Shows detailed information on a movie. Clicking the 'Reviews' floating action button will display extracts from critic reviews.
 
-![reviews](src\images\reviews.PNG)
+![reviews](https://user-images.githubusercontent.com/59964862/146231682-41fb2666-228a-432d-8918-ab9337561907.PNG)
 
 
 ### Routing.
