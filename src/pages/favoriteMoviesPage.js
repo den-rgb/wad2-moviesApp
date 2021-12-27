@@ -1,11 +1,13 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import PageTemplate from "../components/templateMovieListPage";
 import { MoviesContext } from "../contexts/moviesContext";
 import { useQueries } from "react-query";
-import { getMovie } from "../api/tmdb-api";
+import { getMovie } from "../api/movie-api";
 import Spinner from '../components/spinner'
 import WriteReview from "../components/cardIcons/writeReview";
 import CardActions from "@material-ui/core/CardActions";
+
+
 
 
 const FavoriteMoviesPage = () => {
@@ -28,6 +30,8 @@ const FavoriteMoviesPage = () => {
   }
   const movies = favoriteMovieQueries.map((q) => q.data);
   const toDo = () => true;
+
+  
 
   return (
     

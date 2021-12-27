@@ -1,41 +1,8 @@
 
 
-export const getMovies = () => {
-  return fetch(
-      `/api/movies?page=1&limit=10`
-    ).then((response) => {
-    if (!response.ok) {
-      throw new Error(response.json().message);
-    }
-    return response.json();
-  })
-  .catch((error) => {
-     throw error
-  });
-};
 
-export const getMovie = id =>{
-  return fetch(
-    `/api/movies/${id}`
-  ).then(res => res.json());
-}
 
-  /*export const getMovie = (args) => {
-    // console.log(args)
-    const [, idPart] = args.queryKey;
-    const { id } = idPart;
-    return fetch(
-      `https://api.themoviedb.org/3/movie/${id}?api_key=${process.env.REACT_APP_TMDB_KEY}`
-    ).then((response) => {
-      if (!response.ok) {
-        throw new Error(response.json().message);
-      }
-      return response.json();
-    })
-    .catch((error) => {
-      throw error
-   });
-  };*/
+ 
 
  
 
