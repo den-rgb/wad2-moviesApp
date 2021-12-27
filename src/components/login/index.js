@@ -1,15 +1,20 @@
-import React , { useEffect, useState } from "react";
+import React , { useContext, useEffect, useState } from "react";
 import Button from "@material-ui/core/Button";
 import TextField from "@material-ui/core/TextField";
 import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 import Box from "@material-ui/core/Box";
 
+import { AuthContext } from "../../contexts/authContext";
+
 import useForm from "react-hook-form";
 import { withRouter } from "react-router-dom";
 import MenuItem from "@material-ui/core/MenuItem";
 import Grid from "@material-ui/core/Grid";
 
+import { Redirect } from "react-router-dom";
+
+import { Link } from "react-router-dom";
 
 import { auth,db,signInWithGoogle } from "../../firebase";
 import { useAuthState } from "react-firebase-hooks/auth";
@@ -31,10 +36,10 @@ const useStyles = makeStyles((theme) => ({
     padding:"10px",
     display:"flex",
     flexDirection:"column",
-    width:"100%",
+    width:"50%",
     position:"relative",
     paddingRight:"10px",
-    right:"30%",
+    right:"10%",
     border:"3px",
     borderStyle:"inset"
   },
@@ -43,22 +48,22 @@ const useStyles = makeStyles((theme) => ({
     paddingLeft:"10px",
     display:"flex",
     flexDirection:"column",
-    width:"110%",
+    width:"50%",
     position:"relative",
     border:"3px",
     borderStyle:"inset",
-    left:"10%"
+    left:"0%"
   },
   reg:{
     padding:"10px",
     paddingLeft:"10px",
     display:"flex",
     flexDirection:"column",
-    width:"110%",
+    width:"50%",
     position:"relative",
     border:"3px",
     borderStyle:"inset",
-    left:"35%"
+    left:"10%"
   },
   
   root2: {
@@ -72,66 +77,66 @@ const useStyles = makeStyles((theme) => ({
   
 }));
 
-const LoginForm = ({history}) => {
+const LoginPage = props => {
+  const context = useContext(AuthContext)
+  const [userName, setUserName] = useState("");
+  const [password, setPassword] = useState("");
+  
   const classes = useStyles();
 
-  const { register, handleSubmit, errors, reset } = useForm();
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
   const [user, loading, error] = useAuthState(auth);
+
+  const login = () => {
+   context.authenticate(userName, password);
+    console.log(context.isAuthenticated)
+  };
+  const { from } = props.location.state || { from: { pathname: "/" } };
+
+
+
+  
  
   useEffect(() => {
     if (loading) {
       // maybe trigger a loading screen
       return;
     }
-    if (user) history.replace("/");
+    if (user) <Link to="/"/>;
   }, [user, loading]);
   
  
+ 
   const handleMenuSelect = (pageURL) => {
-    history.push(pageURL);
+    
   };
 
 
-
  
-  function verify(){
-    console.log( localStorage.getItem("logUser"));
-    if(email===localStorage.getItem("email")&&password===localStorage.getItem("password")){
-       localStorage.setItem("userName",localStorage.getItem("logUser"));
-       history.push("/");
-    }
-  }
+  
  
  
   
-
+  if (context.isAuthenticated === true) {
+    return <Redirect to={"./"} />;
+  }
   return (
     <Box component="div" className={classes.root}>
       <Typography component="h2" variant="h3">
         Login
       </Typography>
-      <form
-        className={classes.form}
-        align={"center"}
-        
-      >
           <TextField
           
           
           variant="outlined"
           margin="normal"
           required
-          id="email"
-          label="E-mail"
-          name="email"
-          value={email}
+          id="userName"
+          label="User Name"
+          name="userName"
+          value={userName}
           autoFocus
-          onChange={(e) => setEmail(e.target.value)}
-          inputRef={register({ 
-              required: true,
-             })}
+          onChange={(e) => setUserName(e.target.value)}
+         
         />
         
         
@@ -145,17 +150,9 @@ const LoginForm = ({history}) => {
           label="Password"
           name="password"
           onChange={(e) => setPassword(e.target.value)}
-          inputRef={register({  
-            required: true,
-            minLength: { value: 5, message:"Password must be longer!!"},
-            
-        })}
+          
         />
-        {errors.password && (
-          <Typography variant="h6" component="p">
-            {errors.password.message}
-          </Typography>
-        )}
+       
         
         
  <Grid container align={"center"}>
@@ -166,44 +163,27 @@ const LoginForm = ({history}) => {
             variant="contained"
             color="primary"
             className={classes.log}
-            onSubmit={verify}
+            onClick={login}
           >
             Login
           </Button>
           <Button
-            type="reset"
+            type="register"
             variant="contained"
             color="secondary"
             align={"center"}
             className={classes.submit}
-            onClick={() => {
-              reset({
-                email: "",
-                password: "",
-              });
-            }}
-          >
-            Reset
-          </Button>
-         
-          <Button
-            type="register"
-            variant="contained"
-            color="active"
-            className={classes.reg}
-            onClick={() => {
-              
-              history.push("/register")
-            }}
+            onClick={handleMenuSelect("/register")}
           >
             Register
           </Button>
-
+         
+          
           <Button
-            type="register"
+            type="google"
             variant="contained"
-            color="primary"
-            className={classes.log}
+            color="active"
+            className={classes.reg}
              onClick={signInWithGoogle}
              
              >
@@ -212,9 +192,8 @@ const LoginForm = ({history}) => {
           </Button>
 
         </Box></Grid></Grid>
-      </form>
     </Box>
   );
 };
 
-export default withRouter(LoginForm);
+export default withRouter(LoginPage);

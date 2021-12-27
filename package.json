@@ -56,5 +56,6 @@
     "@storybook/preset-create-react-app": "^3.1.7",
     "@storybook/react": "^6.2.9",
     "@types/firebase": "^3.2.1"
-  }
+  },
+  "proxy":"http://localhost:8080"
 }

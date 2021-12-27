@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import PageTemplate from "../components/templateMovieListPage";
 import { useQuery } from 'react-query'
 import Spinner from '../components/spinner'
@@ -9,6 +9,9 @@ import Pagination from '@mui/material/Pagination';
 import { makeStyles } from "@material-ui/core/styles";
 import Paper from '@material-ui/core/Paper';
 import { InfoOutlined, PinDropSharp } from "@material-ui/icons";
+//import {useAuth} from "../contexts/authContext";
+import { Redirect } from "react-router-dom";
+import { MoviesContext } from "../contexts/moviesContext";
 
 
 
@@ -23,15 +26,15 @@ const useStyles = makeStyles(theme=>({
 }));
 
 const HomePage = () => {
-
   const [page,setPage]=useState(1);
+  //const {  data, error, isLoading, isError }  = useQuery('discover', getMovies)
   
-  
-  //const {  data, error, isLoading, isError }  = useQuery('discover', getMovies);
+
   const classes=useStyles();
   
   
-  const fetchProjects = (page = 1) => fetch(`https://api.themoviedb.org/3/discover/movie?api_key=${process.env.REACT_APP_TMDB_KEY}&language=en-US&include_adult=false&include_video=false&page=` + page).then((response) => {
+ 
+  const fetchProjects = (page = 1) => fetch(`/api/movies?page=` + page+`&limit=10`).then((response) => {
     if (!response.ok) {
       throw new Error(response.json().message);
     }
@@ -83,9 +86,12 @@ const HomePage = () => {
   const watchList = movies.filter(m => m.watchList)
   localStorage.setItem('watchList', JSON.stringify(watchList))
 
+
+
  
 
   return (
+
     <div>
       <Paper className={classes.root}>
       <Pagination size="large" count={pageNum} onChange={(event,val)=>setPage(val)} /></Paper>
@@ -100,13 +106,32 @@ const HomePage = () => {
            <AddToWatchListIcon movie={movie}/>
            
           </>
-        }}>
+        }}/>
          
-        </PageTemplate>
+        
        
        </div>
-     
-      
+
+/*
+<div>
+      <Paper className={classes.root}>
+     </Paper>
+    
+    <PageTemplate
+        title="Discover Movies"
+        movies={movies}
+        action={(movie) => {
+          return 
+          <>
+           <AddToFavoritesIcon movie={movie} />
+           <AddToWatchListIcon movie={movie}/>
+           
+          </>
+        }}/>
+         
+        
+       
+       </div>*/
   );
 };
 

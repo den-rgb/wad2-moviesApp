@@ -1,4 +1,4 @@
-import React, { useState,useEffect } from "react";
+import React, { useState,useEffect, useContext } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
@@ -19,6 +19,10 @@ import { Link, useHistory } from "react-router-dom";
 import { db,auth,signInWithGoogle, logout } from "../../firebase";
 import { useAuthState } from "react-firebase-hooks/auth";
 
+import { AuthContext } from "../../contexts/authContext";
+import { FormControlUnstyledContext } from "@mui/material";
+import { signOut } from "firebase/auth";
+
 const useStyles = makeStyles((theme) => ({
   title: {
     flexGrow: 1,
@@ -35,18 +39,19 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 
-const SiteHeader = () => {
+const SiteHeader = (props) => {
   const classes = useStyles();
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("md"));
- const localName=localStorage.getItem("userName");
-  const googleName=localStorage.getItem("goog");
+ 
   const [user, loading, error] = useAuthState(auth);
   const [userName, setName] = useState("");
-  const history = useHistory();
-
+  
+ 
+  const context = useContext(AuthContext);
+  const { history } =props;
   
   
   
@@ -58,28 +63,15 @@ const SiteHeader = () => {
     { label: "Upcoming", path: "/movies/upcoming" },
     { label: "Your WatchList", path: "/movies/watchList" },
     {label: "Trending" , path:"/movies/trending"},
-    {label:handleLogout(),path:"/login"},
+    //{label:context.signout(),path:"/login"},
     
   ];
 
   
 
-  if(localName==="undefined"||localName==="null"||localName===null){
-    localStorage.setItem("userName","");
-  }
+  
 
-  const checkTrue=()=>{
-     if(localName===""||localName===null){
-      handleMenuSelect('/login');
-      
-     }else if(localName==="undefined"||localName==="null"){
-      handleMenuSelect('/login');
-      
-     }else{
-       console.log(localName);
-     }
-
-  };
+  
 
   const handleMenuSelect = (pageURL) => {
     history.push(pageURL);
@@ -88,30 +80,29 @@ const SiteHeader = () => {
   const handleMenu = (event) => {
     setAnchorEl(event.currentTarget);
   };
-
+/*
   function handleLogout(){
-    
-    localStorage.setItem("userName","");
-    localStorage.setItem("goog","");
     logout();
-    
-  }
+  }*/
 
 
   return (
     <>
       <AppBar position="fixed" color="secondary">
         <Toolbar>
+        {context.isAuthenticated===true?(
+                     <IconButton onClick={() => context.signout()}>
+                     <LoginIcon color="primary" fontSize="large"/>
+                     Welcome {context.userName}
+                   </IconButton>
+        ):(
+          <IconButton onClick={() => handleMenuSelect("/login")}>
+          <LoginIcon color="primary" fontSize="large"/>
+          Welcome
+        </IconButton>
+        )
         
-                    <IconButton
-                      
-                      onClick={() => checkTrue()}
-                    >
-                      <LoginIcon color="primary" fontSize="large"/>
-                      
-
-                      Welcome {localName}
-                    </IconButton>
+        }
             {isMobile ? (
               <>
                 <IconButton
@@ -167,7 +158,6 @@ const SiteHeader = () => {
                 ))}
               </>
             )}
-            <Button className={localName!==""?classes.isVisible:classes.notVisible} onClick={handleLogout}>LogOut</Button>
                   
         </Toolbar>
         
