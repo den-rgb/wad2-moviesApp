@@ -71,3 +71,28 @@ export const getMovies = () => {
       throw error
    });
   };
+
+
+  export const getWatchList = (username) => {
+    return fetch(
+        `/api/users/${username}/watchlist`,{headers: {
+         'Authorization': window.localStorage.getItem('token')
+      }
+    }
+    ).then((res) => res.json());
+  };
+
+  
+  
+  
+
+
+export const addWatchList= (username,movieId)=>{
+    return fetch(`/api/users/${username}/watchlist`,{
+        headers:{
+            'Authorization': window.localStorage.getItem('token')
+        },
+        method:'post',
+        body:JSON.stringify({id:movieId})
+    }).then(res=>res.json())
+};
