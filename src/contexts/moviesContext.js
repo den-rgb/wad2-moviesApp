@@ -25,24 +25,30 @@ const MoviesContextProvider = (props) => {
     ) )
   };
 
+  const removeFromWatchList = (movie) => {
+    setWatchList( watchList.filter(
+      (mId) => mId !== movie.id
+    ) )
+  };
+
   const addToFavorites = (movie) => {
-    addFavourite(context.userName,movie.id);
-    setFavorites([...favorites,movie.id])
+     addFavourite(context.userName,movie.id);
+     setFavorites([...favorites,movie.id])
   };
 
   useEffect(() => {
     const getFavourites = async () => {
       const f= await getFavourite(context.userName);
-      const fID=f.map((mId)=>mId.id);
-      console.log(fID);
-      setFavorites(fID);
+      const id=f.map((mId)=>mId.id);
+      console.log(id);
+      setFavorites(id);
     }
 
     const getTheWatchList= async () => {
       const f= await getWatchList(context.userName);
-      const fID=f.map((mId)=>mId.id);
-      console.log(fID);
-      setWatchList(fID);
+      const id=f.map((mId)=>mId.id);
+      console.log(id);
+      setWatchList(id);
     }
 
 
@@ -50,6 +56,8 @@ const MoviesContextProvider = (props) => {
     getFavourites()
 
    }, [context.userName])
+
+  
 
   return (
     <MoviesContext.Provider
@@ -59,7 +67,8 @@ const MoviesContextProvider = (props) => {
         
         addToFavorites,
         addToWatchList,
-        removeFromFavorites
+        removeFromFavorites,
+        removeFromWatchList
       }}
     >
       {props.children}

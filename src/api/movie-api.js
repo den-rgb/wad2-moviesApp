@@ -34,6 +34,7 @@ export const getFavourite = (username) => {
 export const addFavourite= (username,movieId)=>{
     return fetch(`/api/users/${username}/favourites`,{
         headers:{
+            'Content-Type':'application/json',
             'Authorization': window.localStorage.getItem('token')
         },
         method:'post',
@@ -76,6 +77,8 @@ export const getMovies = () => {
   export const getWatchList = (username) => {
     return fetch(
         `/api/users/${username}/watchlist`,{headers: {
+            'Content-Type':'application/json',
+            
          'Authorization': window.localStorage.getItem('token')
       }
     }
@@ -90,6 +93,7 @@ export const getMovies = () => {
 export const addWatchList= (username,movieId)=>{
     return fetch(`/api/users/${username}/watchlist`,{
         headers:{
+            'Content-Type':'application/json',
             'Authorization': window.localStorage.getItem('token')
         },
         method:'post',
