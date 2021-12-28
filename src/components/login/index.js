@@ -8,7 +8,7 @@ import Box from "@material-ui/core/Box";
 import { AuthContext } from "../../contexts/authContext";
 
 import useForm from "react-hook-form";
-import { withRouter } from "react-router-dom";
+import { useHistory, withRouter } from "react-router-dom";
 import MenuItem from "@material-ui/core/MenuItem";
 import Grid from "@material-ui/core/Grid";
 
@@ -81,7 +81,7 @@ const LoginPage = props => {
   const context = useContext(AuthContext)
   const [userName, setUserName] = useState("");
   const [password, setPassword] = useState("");
-  
+  const history = useHistory();
   const classes = useStyles();
 
   const [user, loading, error] = useAuthState(auth);
@@ -106,9 +106,10 @@ const LoginPage = props => {
   
  
  
-  const handleMenuSelect = (pageURL) => {
-    
-  };
+  const handleSelect = () => {
+    let path = `/register`;
+    history.push(path);
+    };
 
 
  
@@ -173,7 +174,7 @@ const LoginPage = props => {
             color="secondary"
             align={"center"}
             className={classes.submit}
-            onClick={handleMenuSelect("/register")}
+            onClick={handleSelect}
           >
             Register
           </Button>

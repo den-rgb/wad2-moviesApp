@@ -1,4 +1,4 @@
-import React , { useEffect, useState } from "react";
+import React , { useContext, useEffect, useState } from "react";
 import Button from "@material-ui/core/Button";
 import TextField from "@material-ui/core/TextField";
 import Typography from "@material-ui/core/Typography";
@@ -6,18 +6,21 @@ import { makeStyles } from "@material-ui/core/styles";
 import Box from "@material-ui/core/Box";
 import Link from "@material-ui/core/Link";
 import useForm from "react-hook-form";
-import { withRouter } from "react-router-dom";
+import { Redirect, useHistory, withRouter } from "react-router-dom";
 import MenuItem from "@material-ui/core/MenuItem";
 import Grid from "@material-ui/core/Grid";
 
 
 import { auth,db,signInWithGoogle } from "../../firebase";
 import { useAuthState } from "react-firebase-hooks/auth";
+import { AuthContext } from "../../contexts/authContext";
 
 const useStyles = makeStyles((theme) => ({
   root: {
     marginTop: theme.spacing(2),
     display: "flex",
+    marginLeft:"25%",
+    marginRight:"25%",
     flexDirection: "column",
     alignItems: "center",
   },
@@ -35,22 +38,31 @@ const useStyles = makeStyles((theme) => ({
     flexDirection:"column",
     width:"100%",
     position:"relative",
-   
+    
+    border:"3px",
+    borderStyle:"inset"
+  },
+  buttons: {
+    padding:"10px",
+    display:"flex",
+    flexDirection:"column",
+    width:"100%",
+    position:"relative",
+    left:"70%",
     border:"3px",
     borderStyle:"inset"
   },
   
 }));
 
-const Registry = ({history }) => {
+const Registry = props => {
   const classes = useStyles();
-  const { register, handleSubmit, errors, reset } = useForm();
   const [email,setEmail]=useState("");
   const [password,setPassword]=useState("");
   const [userName,setUserName]=useState("");
-  const [userName2]=useState("");
- 
-  
+  const [registered,setRegistered] = useState(false);
+  const context = useContext(AuthContext);
+  const history =useHistory();
   const [user, loading, error] = useAuthState(auth);
  
   useEffect(() => {
@@ -61,29 +73,30 @@ const Registry = ({history }) => {
     if (user) history.replace("/");
   }, [user, loading]);
 
-  const handleMenuSelect = (pageURL) => {
-    history.push(pageURL);
-  };
+  const handleSelect = () => {
+    let path = `/login`;
+    history.push(path);
+    };
 
-  const handleSubmit2=()=>{
-       handleMenuSelect("/login")
-      
-  };
-
+  const NewRegister = () =>{
+    if(password.length>5){
+      context.register(userName,password);
+      setRegistered(true);
+    }
+  }
   
+  const { from } = props.location.state || { from: {pathname:"/"}};
+
  
-  
+  if(registered===true){
+    return <Redirect to="./login"/>
+  }
 
   return (
     <Box component="div" className={classes.root}>
       <Typography component="h2" variant="h3">
         Register
       </Typography>
-      <form
-        className={classes.form}
-        onSubmit={handleSubmit2}
-        noValidate
-      >
           <TextField
           
           className={classes.root2}
@@ -96,9 +109,7 @@ const Registry = ({history }) => {
           value={userName}
           autoFocus
           onChange={({target})=>setUserName(target.value)}
-          inputRef={register({ 
-              required: true,
-             })}
+          
         />
 
 <TextField
@@ -113,9 +124,7 @@ const Registry = ({history }) => {
           value={email}
           
           onChange={ ({ target }) =>setEmail(target.value)}
-          inputRef={register({ 
-              required: true,
-             })}
+        
         />
         
         
@@ -129,58 +138,31 @@ const Registry = ({history }) => {
           label="Password"
           name="password"
           onChange={({target})=>setPassword(target.value)}
-          inputRef={register({  
-            required: true,
-            minLength: { value: 5, message:"Password must be longer!!"},
-            
-        })}
+          
         />
-        {errors.password && (
-          <Typography variant="h6" component="p">
-            {errors.password.message}
-          </Typography>
-        )}
+       
         
         
         <Grid container align={"center"}>
-   <Grid xs={12}>
-        <Box className={classes.root2}>
+   <Grid xs={5} >
+        <Box className={classes.buttons}>
           <Button
             type="Register"
             variant="contained"
             color="primary"
-            className={classes.submit}
-            onClick={()=>{
-              handleMenuSelect("/");
-              localStorage.setItem("userName",JSON.stringify(userName));
-              localStorage.setItem("logUser",JSON.stringify(userName));
-              localStorage.setItem("email",JSON.stringify(email));
-              localStorage.setItem("password",JSON.stringify(password));
-            }}
+            
+            onClick={NewRegister}
           >
             Register
           </Button>
-          <Button
-            type="reset"
-            variant="contained"
-            color="secondary"
-            className={classes.submit}
-            onClick={() => {
-              reset({
-                email: "",
-                password: "",
-              });
-            }}
-          >
-            Reset
-          </Button>
+         
          
           <Button
             type="login"
             variant="contained"
-            color="active"
-            className={classes.submit}
+            color="secondary"
             
+            onClick={handleSelect}
           >
             Back to Login
           </Button>
@@ -188,15 +170,15 @@ const Registry = ({history }) => {
           <Button
             type="login"
             variant="contained"
-            color="primary"
-            className={classes.submit}
+            color="active"
+            
             onClick={signInWithGoogle}
           >
            Sign up with Google
           </Button>
 
         </Box></Grid></Grid>
-      </form>
+     
     </Box>
   );
 };
