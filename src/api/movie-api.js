@@ -100,3 +100,25 @@ export const addWatchList= (username,movieId)=>{
         body:JSON.stringify({id:movieId})
     }).then(res=>res.json())
 };
+
+export const removeFavourite= (username,movieId)=>{
+    return fetch(`/api/users/${username}/favourites`,{
+        headers:{
+            'Content-Type':'application/json',
+            'Authorization': window.localStorage.getItem('token')
+        },
+        method:'delete',
+        body:JSON.stringify({id:movieId})
+    }).then(res=>res.json())
+};
+
+export const removeWatchList= (username,movieId)=>{
+    return fetch(`/api/users/${username}/watchlist`,{
+        headers:{
+            'Content-Type':'application/json',
+            'Authorization': window.localStorage.getItem('token')
+        },
+        method:'delete',
+        body:JSON.stringify({id:movieId})
+    }).then(res=>res.json())
+};

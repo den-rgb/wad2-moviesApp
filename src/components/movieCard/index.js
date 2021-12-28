@@ -20,6 +20,7 @@ import Avatar from "@material-ui/core/Avatar";
 
 import { MoviesContext } from "../../contexts/moviesContext";
 import AddToWatchListIcon from "../cardIcons/addToWatchList";
+import RemoveFromWatchListIcon from "../cardIcons/removeFromWatchList";
 import { ToggleButton } from "@material-ui/lab";
 
 import AddToFavoritesIcon from "../cardIcons/addToFavorites";
@@ -135,7 +136,18 @@ export default function MovieCard({ movie, action }) {
       }}><RemoveFromFavoritesIcon movie={movie}/>
          
     </ToggleButton>
-    <AddToWatchListIcon movie={movie}/>
+
+    <ToggleButton value="check" selected={!selected} aria-label="add to favorites" onChange={()=>{
+        setSelected(selected);
+      }}>
+        <AddToWatchListIcon movie={movie}/>
+    </ToggleButton>
+    <ToggleButton value="check" selected={selected} aria-label="remove from favorites" onChange={()=>{
+        setSelected(!selected);
+      }}><RemoveFromWatchListIcon movie={movie}/>
+         
+    </ToggleButton>
+    
     </CardActions><CardActions>
         <Link to={`/movies/${movie.id}`}>
         <Button variant="outlined" size="medium" color="primary">
