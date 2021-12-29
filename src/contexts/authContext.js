@@ -21,6 +21,8 @@ const AuthContextProvider = (props) => {
       setToken(result.token)
       setIsAuthenticated(true);
       setUserName(username);
+    }else{
+      return result.code;
     }
   };
 

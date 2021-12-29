@@ -4,7 +4,8 @@ import TextField from "@material-ui/core/TextField";
 import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 import Box from "@material-ui/core/Box";
-
+import Popup from 'reactjs-popup';
+import 'reactjs-popup/dist/index.css';
 import { AuthContext } from "../../contexts/authContext";
 
 import useForm from "react-hook-form";
@@ -88,7 +89,7 @@ const LoginPage = props => {
 
   const login = () => {
    context.authenticate(userName, password);
-    console.log(context.isAuthenticated)
+   
   };
   const { from } = props.location.state || { from: { pathname: "/" } };
 

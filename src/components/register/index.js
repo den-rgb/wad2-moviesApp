@@ -63,15 +63,10 @@ const Registry = props => {
   const [registered,setRegistered] = useState(false);
   const context = useContext(AuthContext);
   const history =useHistory();
+  const [errorMessage,setError]=useState("");
+  
   const [user, loading, error] = useAuthState(auth);
  
-  useEffect(() => {
-    if (loading) {
-      
-      return;
-    }
-    if (user) history.replace("/");
-  }, [user, loading]);
 
   const handleSelect = () => {
     let path = `/login`;
@@ -85,13 +80,20 @@ const Registry = props => {
     }
   }
   
+  useEffect(() => {
+    if (loading) {
+      // maybe trigger a loading screen
+      return;
+    }
+    if (user) <Link to="/"/>;
+  }, [user, loading]);
+  
   const { from } = props.location.state || { from: {pathname:"/"}};
 
  
   if(registered===true){
     return <Redirect to="./login"/>
   }
-
   return (
     <Box component="div" className={classes.root}>
       <Typography component="h2" variant="h3">
@@ -137,10 +139,12 @@ const Registry = props => {
           id="password"
           label="Password"
           name="password"
-          onChange={({target})=>setPassword(target.value)}
+          onChange={({target})=>setPassword(target.value)
+          }
+          
           
         />
-       
+       <Typography>{errorMessage}</Typography>
         
         
         <Grid container align={"center"}>
