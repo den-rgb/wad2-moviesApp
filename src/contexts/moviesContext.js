@@ -8,15 +8,19 @@ export const MoviesContext = React.createContext(null);
 const MoviesContextProvider = (props) => {
   const [favorites, setFavorites] = useState( [] )
   const [watchList, setWatchList] = useState( [] )
+  
   const context = useContext(AuthContext);
 
  
-
+  
   
 
   const addToWatchList = (movie) => {
+    
     addWatchList(context.userName,movie.id);
+    
     setWatchList([...watchList,movie.id])
+    
   };
   // We will use this function in a later section
   const removeFromFavorites = async (movie) => {
@@ -35,9 +39,11 @@ const MoviesContextProvider = (props) => {
     ) )
   };
 
+ 
   const addToFavorites = (movie) => {
      addFavourite(context.userName,movie.id);
      setFavorites([...favorites,movie.id])
+    
   };
 
   useEffect(() => {
@@ -55,7 +61,9 @@ const MoviesContextProvider = (props) => {
       setWatchList(id);
     }
 
-
+    
+   
+    
     getTheWatchList()
     getFavourites()
 
@@ -68,7 +76,7 @@ const MoviesContextProvider = (props) => {
       value={{
         favorites,
         watchList,
-        
+       
         addToFavorites,
         addToWatchList,
         removeFromFavorites,
