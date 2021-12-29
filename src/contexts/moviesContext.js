@@ -18,8 +18,7 @@ const MoviesContextProvider = (props) => {
   const addToWatchList = (movie) => {
     
     addWatchList(context.userName,movie.id);
-    
-    setWatchList([...watchList,movie.id])
+    setWatchList([...watchList,movie.id]);
     
   };
   // We will use this function in a later section
