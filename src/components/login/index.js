@@ -75,6 +75,20 @@ const useStyles = makeStyles((theme) => ({
     
     marginTop:theme.spacing(20),
   },
+  failed:{
+    border:"3px",
+    
+    position:"relative",
+    display:"flex",
+    padding:"10px",
+    backgroundColor:"pink",
+    color:"red",
+    borderRadius:"20px",
+  }
+,
+  invis:{
+    visibility:"hidden"
+  }
   
 }));
 
@@ -84,12 +98,18 @@ const LoginPage = props => {
   const [password, setPassword] = useState("");
   const history = useHistory();
   const classes = useStyles();
+  const [errorMessage,setError]= useState("");
+  const [successful,setSuccess]=useState(true);
 
   const [user, loading, error] = useAuthState(auth);
 
   const login = () => {
-   context.authenticate(userName, password);
-   
+    context.authenticate(userName, password);
+   if(context.isAuthenticated){
+     setSuccess(true);
+   }else{
+     setSuccess(false);
+   }
   };
   const { from } = props.location.state || { from: { pathname: "/" } };
 
@@ -98,12 +118,14 @@ const LoginPage = props => {
   
  
   useEffect(() => {
-    if (loading) {
-      // maybe trigger a loading screen
-      return;
+
+    if(successful==false){
+      setError("Login Failed. Please Make Sure Your Password And Username Is Correct");
     }
-    if (user) <Link to="/"/>;
-  }, [user, loading]);
+    else{
+      setError("");
+    }
+  },[successful]);
   
  
  
@@ -126,6 +148,8 @@ const LoginPage = props => {
       <Typography component="h2" variant="h3">
         Login
       </Typography>
+      <Typography className={successful?classes.invis:classes.failed}>{errorMessage}</Typography>
+
           <TextField
           
           

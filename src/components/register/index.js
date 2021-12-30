@@ -15,6 +15,7 @@ import { auth,db,signInWithGoogle } from "../../firebase";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { AuthContext } from "../../contexts/authContext";
 
+
 const useStyles = makeStyles((theme) => ({
   root: {
     marginTop: theme.spacing(2),
@@ -52,6 +53,20 @@ const useStyles = makeStyles((theme) => ({
     border:"3px",
     borderStyle:"inset"
   },
+  failed:{
+    border:"3px",
+    
+    position:"relative",
+    display:"flex",
+    padding:"10px",
+    backgroundColor:"pink",
+    color:"red",
+    borderRadius:"20px",
+  }
+,
+  invis:{
+    visibility:"hidden"
+  }
   
 }));
 
@@ -64,6 +79,8 @@ const Registry = props => {
   const context = useContext(AuthContext);
   const history =useHistory();
   const [errorMessage,setError]=useState("");
+  const [passwordError,setPasswordError]=useState("");
+  const [successful,setSuccess]=useState(true);
   
   const [user, loading, error] = useAuthState(auth);
  
@@ -74,20 +91,36 @@ const Registry = props => {
     };
 
   const NewRegister = () =>{
-    if(password.length>5){
+    
+    if(password.length>=5){
       context.register(userName,password);
       setRegistered(true);
+      setSuccess(true);
+    }else{
+      setSuccess(false);
     }
+    
   }
   
-  useEffect(() => {
-    if (loading) {
-      // maybe trigger a loading screen
-      return;
-    }
-    if (user) <Link to="/"/>;
-  }, [user, loading]);
-  
+  useEffect(()=>{
+    if(password.length==0){
+      setError("");
+    }else if(password.length<=5){
+      setError("Password must be at least 5 characters");
+    }else{setError("")}
+  },[password])
+
+ 
+
+  useEffect(()=>{
+    if(successful==false){
+      setPasswordError("Failed To Register Please Check Your Details Again");
+      }else{
+      setPasswordError("");
+      }
+  },[context,password,userName,successful])
+    
+
   const { from } = props.location.state || { from: {pathname:"/"}};
 
  
@@ -99,6 +132,7 @@ const Registry = props => {
       <Typography component="h2" variant="h3">
         Register
       </Typography>
+      <Typography className={successful?classes.invis:classes.failed}>{passwordError}</Typography>
           <TextField
           
           className={classes.root2}
@@ -139,12 +173,13 @@ const Registry = props => {
           id="password"
           label="Password"
           name="password"
+          helperText={errorMessage}
           onChange={({target})=>setPassword(target.value)
           }
           
           
         />
-       <Typography>{errorMessage}</Typography>
+       
         
         
         <Grid container align={"center"}>

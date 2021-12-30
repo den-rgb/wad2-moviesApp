@@ -21,15 +21,12 @@ const AuthContextProvider = (props) => {
       setToken(result.token)
       setIsAuthenticated(true);
       setUserName(username);
-    }else{
-      return result.code;
     }
   };
 
   const register = async (username, password) => {
     const result = await reg(username, password);
-    console.log(result.code);
-    return (result.code == 201) ? true : false;
+    return (result.success !== false) ? true : false;
   };
 
   const signout = () => {
