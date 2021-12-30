@@ -26,7 +26,21 @@ export const getFavourite = (username) => {
     ).then((res) => res.json());
   };
 
-  
+  export const getUpcomingMovies = () => {
+    return fetch(
+        `/api/movies/tmdb/upcoming`,{headers:{
+            'Content-Type':'application/json'
+        }}
+      ).then((response) => {
+      if (!response.ok) {
+        throw new Error(response.json().message);
+      }
+      return response.json();
+    })
+    .catch((error) => {
+       throw error
+    });
+  };
   
   
 
