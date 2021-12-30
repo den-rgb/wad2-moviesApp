@@ -171,6 +171,7 @@ const LoginPage = props => {
           variant="outlined"
           margin="normal"
           required
+          type="password"
           value={password}
           id="password"
           label="Password"

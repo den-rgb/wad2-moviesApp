@@ -170,6 +170,7 @@ const Registry = props => {
           margin="normal"
           required
           value={password}
+          type="password"
           id="password"
           label="Password"
           name="password"
