@@ -2,7 +2,7 @@ import React from "react";
 import PageTemplate from "../components/templateMovieListPage";
 import { useQuery } from 'react-query'
 import Spinner from '../components/spinner'
-import {getUpcomingMovies} from '../api/movie-api'
+import {getUpcomingMovies} from '../api/tmdb-api'
 
 
 
