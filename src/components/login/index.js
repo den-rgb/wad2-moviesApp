@@ -103,8 +103,8 @@ const LoginPage = props => {
 
   const [user, loading, error] = useAuthState(auth);
 
-  const login = () => {
-    context.authenticate(userName, password);
+  const login = async () => {
+    await context.authenticate(userName, password);
    if(context.isAuthenticated){
      setSuccess(true);
    }else{

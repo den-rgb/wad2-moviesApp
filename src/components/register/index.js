@@ -90,10 +90,10 @@ const Registry = props => {
     history.push(path);
     };
 
-  const NewRegister = () =>{
+  const NewRegister = async () =>{
     
     if(password.length>=5){
-      context.register(userName,password);
+      await context.register(userName,password);
       setRegistered(true);
       setSuccess(true);
     }else{
