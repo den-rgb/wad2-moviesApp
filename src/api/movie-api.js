@@ -1,3 +1,26 @@
+export const submitCode= (token,googleToken)=>{
+    return fetch('/api/code/totp-validate',{
+        headers:{
+            'Content-Type':'application/json'
+        },
+        method:'post',
+        body:JSON.stringify({secret:token,token:googleToken})
+    }).then(res=>res.json())
+};
+
+export const getGoogleAuthKey= ()=>{
+    return fetch('/api/code/totp-secret',{
+        headers:{
+            'Content-Type':'application/json'
+        },
+        method:'post',
+    }).then(res=>res.json())
+};
+
+
+
+
+
 export const login= (username,password)=>{
     return fetch('/api/users',{
         headers:{

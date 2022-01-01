@@ -11,7 +11,7 @@ const AddToFavoritesIcon = ({ movie }) => {
   const history = useHistory();
 
   const handleAddToFavorites = (e) => {
-    if(authContext.isAuthenticated){
+    if(authContext.isValidated){
     e.preventDefault();
     context.addToFavorites(movie);
     }else{

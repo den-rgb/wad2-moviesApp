@@ -3,6 +3,7 @@ import express from 'express';
 import helmet from 'helmet';
 import moviesRouter from './api/movies';
 import genresRouter from './api/genres';
+import codeRouter from './api/TwoFactor';
 import session from 'express-session';
 import authenticate from './authenticate';
 import './db';
@@ -50,8 +51,10 @@ app.use(express.json());
 app.use('/api/genres', genresRouter);
 app.use('/api/users', usersRouter);
 app.use('/api/movies', moviesRouter);
+app.use('/api/code',codeRouter);
 //app.use('/api/movies', passport.authenticate('jwt', {session: false}), moviesRouter);
 app.use(errHandler);
+
 
 
 

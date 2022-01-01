@@ -141,7 +141,7 @@ const LoginPage = props => {
  
   
   if (context.isAuthenticated === true) {
-    return <Redirect to={"./"} />;
+    return <Redirect to={"/login/twoFactor"} />;
   }
   return (
     <Box component="div" className={classes.root}>

@@ -12,7 +12,7 @@ const AddToWatchListIcon = ({ movie }) => {
   const history = useHistory();
 
   const handleAddToWatchList = (e) => {
-    if(authContext.isAuthenticated){
+    if(authContext.isValidated){
     e.preventDefault();
     context.addToWatchList(movie);
   }else{

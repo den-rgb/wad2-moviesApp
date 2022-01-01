@@ -13,6 +13,7 @@ import MoviesContextProvider from "./contexts/moviesContext";
 import AddMovieReviewPage from './pages/addMovieReviewPage';
 import WatchListPage from './pages/watchListPage';
 import Login from './components/login';
+import TFA from './components/2fa';
 import TrendingMoviesPage from "./pages/trendingPage";
 import Register from "./components/register";
 import AuthProvider from "./contexts/authContext";
@@ -36,6 +37,7 @@ const App = () => {
       <BrowserRouter><AuthProvider>
           <SiteHeader /><MoviesContextProvider>    
       <Switch>
+        <PrivateRoute exact path="/login/twoFactor" component={TFA}/>
         <Route exact path="/movies/trending" component ={TrendingMoviesPage}/>
         <Route path="/login" component={Login}/>
         <Route path="/register" component ={Register}/>
