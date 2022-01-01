@@ -4,6 +4,7 @@ import asyncHandler from 'express-async-handler';
 import jwt from 'jsonwebtoken';
 import movieModel from '../movies/movieModel';
 
+
 const router = express.Router(); // eslint-disable-line
 
 // Get all users
@@ -87,6 +88,7 @@ router.post('/:userName/favourites', asyncHandler(async (req, res) => {
     res.status(201).json(user.favourites);
   }));
 
+ 
 
 
 router.post('/:userName/watchlist', asyncHandler(async (req, res) => {
@@ -109,6 +111,7 @@ router.get('/:userName/watchlist', asyncHandler( async (req, res) => {
   const user = await User.findByUserName(userName).populate('watchlist');
   res.status(201).json(user.watchlist);
 }));
+
 
 
 router.delete("/:userName/favourites",  asyncHandler(async (req, res) => {

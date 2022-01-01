@@ -9,6 +9,7 @@ import './db';
 import './seedData';
 import usersRouter from './api/users';
 import passport from './authenticate';
+import { resetWarningCache } from 'prop-types';
 
 dotenv.config();
 
@@ -22,14 +23,18 @@ const errHandler = (err, req, res, next) => {
 };
 
 
-
+const morgan = require('morgan');
 const app = express();
 
 const port = process.env.PORT;
 
+morgan.token('body',(req)=>JSON.stringify(req.body));
+
+
+
 app.use(passport.initialize());
 
-
+app.use(morgan(':url :method :body'));
 app.use(helmet());
 app.use(session({
   secret: 'ilikecake',
