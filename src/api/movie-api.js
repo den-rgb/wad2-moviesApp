@@ -140,3 +140,14 @@ export const removeWatchList= (username,movieId)=>{
         body:JSON.stringify({id:movieId})
     }).then(res=>res.json())
 };
+
+export const getReviews = (id) => {
+    return fetch(
+        `/api/movies/${id}/reviews`,{headers: {
+            'Content-Type':'application/json',
+            
+         'Authorization': window.localStorage.getItem('token')
+      }
+    }
+    ).then((res) => res.json());
+  };

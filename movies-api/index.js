@@ -26,12 +26,30 @@ const errHandler = (err, req, res, next) => {
 const cookieParser = require('cookie-parser');
 const morgan = require('morgan');
 const app = express();
-
+const swaggerUi  = require('swagger-ui-express');
+const swaggerJSDoc=require('swagger-jsdoc'); 
 const port = process.env.PORT;
 
 morgan.token('body',(req)=>JSON.stringify(req.body));
 
 
+const swaggerOptions={
+  swaggerDefinition:{
+    info:{
+      title:'movies-api',
+      description:'Movie API',
+      contact:{
+        name:'Denis'
+      },
+      servers:["http://localhost:8080/"]
+    }
+  },
+  apis:['index.js','../movies-api/api/users/index.js','../movies-api/api/movies/index.js','../movies-api/api/TwoFactor/index.js']
+};
+
+const swaggerDocs = swaggerJSDoc(swaggerOptions);
+
+app.use("/api-docs",swaggerUi.serve,swaggerUi.setup(swaggerDocs));
 
 app.use(passport.initialize());
 app.use(cookieParser());

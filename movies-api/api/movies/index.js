@@ -7,9 +7,32 @@ import {
     getUpcomingMovies
   } from '../tmdb-api';
 
+  /**
+ * @swagger 
+ * definitions:
+ *  movies:
+ *   type: object
+ *   properties:
+ *    title:
+ *     type: string
+ *     description: Movie
+ *     example: 'Spider Man'
+ *   
+ */
 const router = express.Router(); 
 
-
+/**
+   * @swagger
+   * /api/movies:
+   *  get:
+   *   description: Get all Movies
+   *   responses:
+   *     '200':
+   *       description: Returning all available movies
+   *
+   * 
+   * 
+   */
 router.get('/', asyncHandler(async (req, res) => {
     let { page = 1, limit = 10 } = req.query; // destructure page and limit and set default values
     [page, limit] = [+page, +limit]; //trick to convert to numeric (req.query will contain string values)
@@ -24,6 +47,7 @@ router.get('/', asyncHandler(async (req, res) => {
 
     res.status(200).json(returnObject);
 }));
+
 
 router.get('/tmdb/upcoming', asyncHandler( async(req, res) => {
     const upcomingMovies = await getUpcomingMovies();
@@ -41,6 +65,8 @@ router.get('/:id', asyncHandler(async (req, res) => {
         res.status(404).json({message: 'The resource you requested could not be found.', status_code: 404});
     }
 }));
+
+
 // Get movie reviews
 router.get('/:id/reviews', (req, res) => {
     const id = parseInt(req.params.id);
