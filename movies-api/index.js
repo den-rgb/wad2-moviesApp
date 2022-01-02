@@ -10,7 +10,7 @@ import './db';
 import './seedData';
 import usersRouter from './api/users';
 import passport from './authenticate';
-import { resetWarningCache } from 'prop-types';
+
 
 dotenv.config();
 
@@ -23,7 +23,7 @@ const errHandler = (err, req, res, next) => {
   res.status(500).send(`Hey!! You caught the error 👍👍. Here's the details: ${err.stack} `);
 };
 
-
+const cookieParser = require('cookie-parser');
 const morgan = require('morgan');
 const app = express();
 
@@ -34,7 +34,7 @@ morgan.token('body',(req)=>JSON.stringify(req.body));
 
 
 app.use(passport.initialize());
-
+app.use(cookieParser());
 app.use(morgan(':url :method :body'));
 app.use(helmet());
 app.use(session({

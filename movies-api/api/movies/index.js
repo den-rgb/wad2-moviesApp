@@ -1,6 +1,6 @@
 import express from 'express';
 import { movies, movieReviews, movieDetails, genres } from './moviesData';
-import uniqid from 'uniqid'
+import uniqid from 'uniqid';
 import movieModel from './movieModel';
 import asyncHandler from 'express-async-handler';
 import {
