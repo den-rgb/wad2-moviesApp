@@ -77,6 +77,7 @@ const AuthContextProvider = (props) => {
         authCode,
         getSecretKey,
         isAuthenticated,
+        isValidated,
         authenticate,
         register,
         signout,
